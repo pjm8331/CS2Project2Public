@@ -16,4 +16,5 @@ public class WhackBoard {
     public int getTimeLeft(){
         return 0;
     }
+
 }
