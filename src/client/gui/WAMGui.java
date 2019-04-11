@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import java.util.List;
 
 
-public class WhackGui extends Application implements Observer<WAMBoard> {
+public class WAMGui extends Application implements Observer<WAMBoard> {
 
     private WAMBoard whackBoard;
 
@@ -43,7 +43,7 @@ public class WhackGui extends Application implements Observer<WAMBoard> {
 
     public static void main(String[] args){
         if (args.length != 5){
-            System.out.println("Usage: java WhackGui game-port# #rows #columns #players game-duration-seconds.");
+            System.out.println("Usage: java WAMGui game-port# #rows #columns #players game-duration-seconds.");
             System.exit(-1);
         }
         Application.launch(args);

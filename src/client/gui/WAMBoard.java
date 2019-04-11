@@ -7,18 +7,18 @@ import java.util.List;
  * @author Peter Mastropaolo(pjm8331)
  */
 public class WAMBoard {
-    public static int ROWS;
-    public static int COLS;
-    public static int TIME;
-    public static int PLAYERS;
+    public static int rows;
+    public static int cols;
+    public static int time;
+    public static int players;
     private List<Observer<WAMBoard>> observerlist;
     private Spot[][] board;
 
-    public WAMBoard(int ROWS, int COLS, int PLAYERS, int TIME){
-        this.ROWS = ROWS;
-        this.COLS = COLS;
-        this.PLAYERS = PLAYERS;
-        this.TIME = TIME;
+    public WAMBoard(int rows, int cols, int players, int time){
+        this.rows = rows;
+        this.cols = cols;
+        this.players = players;
+        this.time = time;
 
     }
     public enum Spot{
@@ -28,10 +28,10 @@ public class WAMBoard {
         WIN, LOSE, TIE, ERROR, NOT_DONE
     }
     public int getTimeLeft(){
-        return 0;
+        return time;
     }
     public boolean isDown(int col, int row){
-        return(col >= 0 && col < COLS) && (row >=0 && row < ROWS) &&
+        return(col >= 0 && col < this.cols) && (row >=0 && row < this.rows) &&
                 (this.board[col][row] == Spot.DOWN);
     }
 
