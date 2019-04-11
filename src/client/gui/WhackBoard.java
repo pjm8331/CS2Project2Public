@@ -1,6 +1,6 @@
 package client.gui;
 
-import java.util.Observer;
+import java.util.List;
 
 /**
  * @author John Baxley(jnb3471)
@@ -11,7 +11,7 @@ public class WhackBoard {
     public static int COLS;
     public static int TIME;
     public static int PLAYERS;
-    private list<Observer<WhackBoard>> observerlist;
+    private List<Observer<WhackBoard>> observerlist;
 
     public enum Status{
         WIN, LOSE, TIE, ERROR, NOT_DONE

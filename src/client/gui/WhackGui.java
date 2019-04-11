@@ -22,9 +22,6 @@ public class WhackGui extends Application implements Observer<WhackBoard> {
 
     private WhackClient whackClient;
 
-    private int time;
-
-    private int players;
 
     @Override
     public void init() throws RuntimeException{}
@@ -40,6 +37,8 @@ public class WhackGui extends Application implements Observer<WhackBoard> {
     @Override
     public void update(WhackBoard whackBoard){}
 
-    public static void main(String[])
+    public static void main(String[] args){
+        if (args.length != 5){}
+    }
 
 }
