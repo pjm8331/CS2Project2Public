@@ -18,6 +18,11 @@ public class WhackGui extends Application implements Observer<WAMBoard> {
         try{
             List<String> args = getParameters().getRaw();
 
+            String host = args.get(0);
+
+            this.whackBoard = new WAMBoard();
+
+
 
         }
         catch (WAMException | ArrayIndexOutOfBoundsException | NumberFormatException e){
