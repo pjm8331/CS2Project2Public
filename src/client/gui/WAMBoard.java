@@ -6,14 +6,21 @@ import java.util.List;
  * @author John Baxley(jnb3471)
  * @author Peter Mastropaolo(pjm8331)
  */
-public class WhackBoard {
+public class WAMBoard {
     public static int ROWS;
     public static int COLS;
     public static int TIME;
     public static int PLAYERS;
-    private List<Observer<WhackBoard>> observerlist;
+    private List<Observer<WAMBoard>> observerlist;
     private Spot[][] board;
 
+    public WAMBoard(int ROWS, int COLS, int PLAYERS, int TIME){
+        this.ROWS = ROWS;
+        this.COLS = COLS;
+        this.PLAYERS = PLAYERS;
+        this.TIME = TIME;
+
+    }
     public enum Spot{
         UP, DOWN
     }
@@ -28,7 +35,7 @@ public class WhackBoard {
                 (this.board[col][row] == Spot.DOWN);
     }
 
-    public void addObserver(Observer<WhackBoard> observer){
+    public void addObserver(Observer<WAMBoard> observer){
         this.observerlist.add(observer);
     }
 }
