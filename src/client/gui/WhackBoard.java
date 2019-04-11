@@ -23,7 +23,7 @@ public class WhackBoard {
     public int getTimeLeft(){
         return 0;
     }
-    public boolean isValid(int col, int row){
+    public boolean isDown(int col, int row){
         return(col >= 0 && col < COLS) && (row >=0 && row < ROWS) &&
                 (this.board[col][row] == Spot.DOWN);
     }
