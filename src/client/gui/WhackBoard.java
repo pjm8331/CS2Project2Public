@@ -29,6 +29,6 @@ public class WhackBoard {
     }
 
     public void addObserver(Observer<WhackBoard> observer){
-        this.observerlist.add()
+        this.observerlist.add(observer);
     }
 }
