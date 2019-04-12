@@ -29,14 +29,14 @@ public class WAMBoard {
                 WAMboard[col][row] = Spot.DOWN;
             }
         }
-        this.status = Status.NOT_DONE;
+        this.status = Status.RUNNING;
 
     }
     public enum Spot{
         UP, DOWN
     }
     public enum Status{
-        WIN, LOSE, TIE, ERROR, NOT_DONE
+        WIN, LOSE, TIE, ERROR, RUNNING
     }
     public int getTimeLeft(){
         return time;
@@ -53,5 +53,9 @@ public class WAMBoard {
         for(Observer<WAMBoard> observs: this.observerlist){
             observs.update(this);
         }
+    }
+
+    public void close(){
+        alertObservers();
     }
 }
