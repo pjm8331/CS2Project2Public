@@ -1,6 +1,7 @@
 package client.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -78,7 +79,6 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         GridPane gridPane = new GridPane();
 
         Image down = new Image(getClass().getResourceAsStream("Moledown.png"));
-        Image up = new Image(getClass().getResourceAsStream("Moleup.png"));
 
         for (int i = 0; i < this.col; i++){
             for (int j = 0; j < this.row; j++){
@@ -116,10 +116,55 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         this.whackClient.close();
     }
 
-    private void refresh(){}
+    private void refresh(){
+        Image up = new Image(getClass().getResourceAsStream("Moleup.png"));
+        Image down = new Image(getClass().getResourceAsStream("Moledown.png"));
+
+        for (int i = 0; i < this.col; i++) {
+            for (int j = 0; j < this.row; j++) {
+                WAMBoard.Spot spot = this.whackBoard.isDown(i, j);
+
+                if (spot == WAMBoard.Spot.UP){
+                    this.buttons[i][j].setGraphic(new ImageView(up));
+                }
+                else if (spot == WAMBoard.Spot.DOWN){
+                    this.buttons[i][j].setGraphic(new ImageView(down));
+                }
+            }
+        }
+
+        WAMBoard.Status status = this.whackBoard.getStatus();
+
+        switch (status) {
+            case TIE:
+                this.textField.setText("You tied");
+                break;
+            case WIN:
+                this.textField.setText("You win");
+                break;
+            case LOSE:
+                this.textField.setText("You lose");
+                break;
+            case ERROR:
+                this.textField.setText(status.toString());
+                break;
+
+            default:
+                this.textField.setText(this.whackBoard.getTimeLeft() + " time left");
+                //do points here later
+        }
+
+    }
 
     @Override
-    public void update(WAMBoard whackBoard){}
+    public void update(WAMBoard whackBoard){
+        if (Platform.isFxApplicationThread()){
+            this.refresh();
+        }
+        else{
+            Platform.runLater(() -> this.refresh());
+        }
+    }
 
     public static void main(String[] args){
         if (args.length != 5){

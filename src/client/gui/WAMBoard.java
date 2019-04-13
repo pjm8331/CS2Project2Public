@@ -58,4 +58,8 @@ public class WAMBoard {
     public void close(){
         alertObservers();
     }
+
+    public Status getStatus(){
+        return this.status;
+    }
 }
