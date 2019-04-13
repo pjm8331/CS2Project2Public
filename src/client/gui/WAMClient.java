@@ -71,6 +71,10 @@ public class WAMClient {
                     case GAME_WON:
                     case SCORE:
                     case ERROR:
+                    default:
+                        System.err.println("Unknown Command: " + input);
+                        this.stop();
+                        break;
                 }
             }
             catch( NoSuchElementException e){
