@@ -1,11 +1,17 @@
 package client.gui;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.util.List;
+//links for pics
 
+//https://brightyellow.com.au/home/cb024artboard-1/
+//http://www.notionofform.com/notion-of-form-and-colours
 
 public class WAMGui extends Application implements Observer<WAMBoard> {
 
@@ -14,6 +20,12 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
     private WAMClient whackClient;
 
     private Button[][] buttons;
+
+    private TextField textField;
+
+    private int row;
+
+    private int col;
 
 
     @Override
@@ -26,11 +38,16 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
             int port = Integer.parseInt(args.get(0));
 
             int row = Integer.parseInt(args.get(1));
+            this.row = row;
 
             int col = Integer.parseInt(args.get(2));
+            this.col = col;
 
             int players = Integer.parseInt(args.get(3));
 
+            if (players < 1){
+                throw new WAMException();
+            }
             int time = Integer.parseInt(args.get(4));
 
             this.whackBoard = new WAMBoard(row, col, players, time);
@@ -39,6 +56,8 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
             this.buttons = new Button[row][col];
 
+            this.textField = new TextField(time + " time left");
+
         }
         catch (WAMException | ArrayIndexOutOfBoundsException | NumberFormatException e){
             System.err.println(e);
@@ -46,7 +65,21 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         }
     }
 
-    public void start(Stage stage){}
+    public void start(Stage stage){
+        GridPane gridPane = new GridPane();
+
+        Image image = new Image(getClass().getResourceAsStream("Moledown.png"));
+        Image image2 = new Image(getClass().getResourceAsStream("Moleup.png"));
+
+        for (int i = 0; i < this.col; i++){
+            for (int j = 0; j < this.row; j++){
+                Button button = new Button()
+            }
+        }
+
+
+
+    }
 
     @Override
     public void stop(){}
