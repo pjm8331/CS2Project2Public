@@ -15,6 +15,7 @@ public class WAMBoard {
     private List<Observer<WAMBoard>> observerlist;
     private Spot[][] WAMboard;
     private Status status;
+    private boolean myTurn;
 
     public WAMBoard(int rows, int cols, int players, int time){
         this.rows = rows;
@@ -23,6 +24,7 @@ public class WAMBoard {
         this.time = time;
         this.observerlist = new LinkedList<>();
         this.WAMboard = new Spot[cols][rows];
+        this.myTurn = false;
 
         for(int row = 0; row < rows; row++){
             for(int col = 0; col <cols; col++){
@@ -34,6 +36,11 @@ public class WAMBoard {
     }
     public enum Spot{
         UP, DOWN
+    }
+
+    public void makeMove(){
+        this.myTurn = true;
+        alertObservers();
     }
     public enum Status{
         WIN, LOSE, TIE, ERROR, RUNNING

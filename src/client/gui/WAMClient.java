@@ -1,5 +1,7 @@
 package client.gui;
 
+import common.WAMProtocol;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -9,6 +11,8 @@ import java.util.Scanner;
 import static common.WAMProtocol.*;
 
 public class WAMClient {
+    private static boolean Debug = false;
+
     private Socket clientSocket;
 
     private Scanner in;
@@ -28,10 +32,28 @@ public class WAMClient {
             this.in = new Scanner(clientSocket.getInputStream());
             this.out = new PrintStream(clientSocket.getOutputStream());
             this.go = true;
+
+            String request = this.in.next();
+            String args = this.in.nextLine();
+
+            if (!request.equals(WELCOME)){
+                throw new WAMException();
+            }
+            WAMClient.print("Connected to server" + this.clientSocket);
         }
         catch (IOException e){}
     }
 
+    private void makeMove(){
+        this.wamBoard.makeMove();
+
+    }
+    private static void print(Object logmsg){
+        if (WAMClient.Debug){
+            System.out.println(logmsg);
+        }
+
+    }
     private synchronized boolean getGo(){
         return this.go;
     }
