@@ -62,6 +62,8 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
             this.whackBoard = new WAMBoard(row, col, players, time);
 
+            this.whackBoard.addObserver(this);
+
             this.whackClient = new WAMClient(host,port, this.whackBoard );
 
             this.buttons = new Button[row][col];
@@ -75,7 +77,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         }
     }
 
-    public void start(Stage stage){
+    public void start(Stage stage) throws Exception{
         GridPane gridPane = new GridPane();
 
         Image down = new Image(getClass().getResourceAsStream("Moledown.png"));

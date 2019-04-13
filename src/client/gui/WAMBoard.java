@@ -42,12 +42,15 @@ public class WAMBoard {
         this.myTurn = true;
         alertObservers();
     }
+
     public enum Status{
         WIN, LOSE, TIE, ERROR, RUNNING
     }
+
     public int getTimeLeft(){
         return time;
     }
+
     public Spot isDown(int col, int row){
         return this.WAMboard[col][row];
     }
