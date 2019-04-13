@@ -49,6 +49,24 @@ public class WAMBoard {
         this.observerlist.add(observer);
     }
 
+    public void gameLost(){
+        this.status = Status.LOSE;
+        alertObservers();
+    }
+    public void gameTied(){
+        this.status = Status.TIE;
+        alertObservers();
+    }
+    public void gameWon(){
+        this.status = Status.WIN;
+        alertObservers();
+    }
+
+    public void error(){
+        this.status = Status.ERROR;
+        alertObservers();
+    }
+
     public void alertObservers(){
         for(Observer<WAMBoard> observs: this.observerlist){
             observs.update(this);
