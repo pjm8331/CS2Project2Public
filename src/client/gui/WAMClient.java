@@ -16,6 +16,8 @@ public class WAMClient {
 
     private boolean go;
 
+    //finish not done
+    //todo
     public WAMClient(String host, int port, WAMBoard wamBoard) throws WAMException{
         try {
             this.clientSocket = new Socket(host, port);
@@ -25,5 +27,23 @@ public class WAMClient {
             this.go = true;
         }
         catch (IOException e){}
+    }
+
+    public void startListener(){
+        new Thread(() -> this.run()).start();
+    }
+
+    public void close(){
+        try{
+            this.clientSocket.close();
+        }
+        catch (IOException e){
+
+        }
+        this.wamBoard.close();
+    }
+
+    private void run(){
+        //todo
     }
 }

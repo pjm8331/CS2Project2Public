@@ -1,12 +1,21 @@
 package client.gui;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.List;
 //links for pics
 
@@ -68,21 +77,44 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
     public void start(Stage stage){
         GridPane gridPane = new GridPane();
 
-        Image image = new Image(getClass().getResourceAsStream("Moledown.png"));
-        Image image2 = new Image(getClass().getResourceAsStream("Moleup.png"));
+        Image down = new Image(getClass().getResourceAsStream("Moledown.png"));
+        Image up = new Image(getClass().getResourceAsStream("Moleup.png"));
 
         for (int i = 0; i < this.col; i++){
             for (int j = 0; j < this.row; j++){
-                Button button = new Button()
+                Button button = new Button();
+                button.setPrefSize(80, 80);
+                button.setGraphic(new ImageView(down));
+
+                button.setOnAction((actionEvent) -> {
+                });
+
+                this.buttons[j][i] = button;
+
+                gridPane.add(this.buttons[j][i], i, j);
             }
         }
 
+        BorderPane borderPane = new BorderPane();
 
+        HBox hBox = new HBox(this.textField);
+
+        borderPane.setBottom(hBox);
+        borderPane.setCenter(gridPane);
+
+        Scene scene = new Scene(borderPane);
+
+        stage.setTitle("Whack a mole");
+        stage.setScene(scene);
+
+        this.whackClient.startListener();
 
     }
 
     @Override
-    public void stop(){}
+    public void stop(){
+        this.whackClient.close();
+    }
 
     private void refresh(){}
 
