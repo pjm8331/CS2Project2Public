@@ -37,10 +37,9 @@ public class WAMClient {
      * Constructor for WAMClient
      * @param host the host server to connect to
      * @param port the port of the server to connect to
-     * @param wamBoard the board to that is used as a model of the game
      * @throws WAMException
      */
-    public WAMClient(String host, int port, WAMBoard wamBoard) throws WAMException{
+    public WAMClient(String host, int port) throws WAMException{
         try {
             this.clientSocket = new Socket(host, port);
             this.in = new Scanner(clientSocket.getInputStream());
@@ -50,12 +49,19 @@ public class WAMClient {
             String request = this.in.next();
             String args = this.in.nextLine();
 
+            String[] fields = args.trim().split( " " );
+
+            int rows = Integer.parseInt(fields[0]);
+            int cols = Integer.parseInt(fields[1]);
+            int players = Integer.parseInt(fields[2]);
+            int time = Integer.parseInt(fields[3]);
+
+            this.wamBoard = new WAMBoard(rows, cols, players, time);
+
             if (!request.equals(WELCOME)){
                 throw new WAMException("No welcome message");
             }
             WAMClient.print("Connected to server" + this.clientSocket);
-
-            this.wamBoard = wamBoard;
 
         }
         catch (IOException e) {
@@ -63,11 +69,20 @@ public class WAMClient {
         }
     }
 
+    /**
+     * @return wamboard to be given to the gui representation
+     */
+    public WAMBoard getWamBoard(){
+        return this.wamBoard;
+    }
 
-    //Only prints if debug is true
-    private static void print(Object logmsg){
+    /**
+     * Only prints if debug is true
+     * @param msg message to be printed out
+     */
+    private static void print(Object msg){
         if (WAMClient.Debug){
-            System.out.println(logmsg);
+            System.out.println(msg);
         }
 
     }
@@ -80,17 +95,23 @@ public class WAMClient {
         return this.go;
     }
 
-    //Sets go to false, stopping the game
+    /**
+     * Sets go to false, stopping the game
+     */
     private synchronized void stop(){
         this.go = false;
     }
 
-    //Called when starting to receive messages from server
+    /**
+     * Called when starting to receive messages from server
+     */
     public void startListener(){
         new Thread(() -> this.run()).start();
     }
 
-    //Closes the connection to the server and the model
+    /**
+     * Closes the connection to the server and the model
+     */
     public void close(){
         try{
             this.clientSocket.close();
@@ -101,14 +122,15 @@ public class WAMClient {
         this.wamBoard.close();
     }
 
-    //Handles all server messages and updates the board accordingly
+    /**
+     * Handles all server messages and updates the board accordingly
+     */
     private void run(){
         while(this.getGo()){
             try{
                 String input = this.in.next();
                 String args = this.in.nextLine().trim();
 
-                System.out.println(input + " " + args);
                 switch(input){
                     case MOLE_UP:
                         String[] fields = args.trim().split( " " );

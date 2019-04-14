@@ -60,12 +60,16 @@ public class WAMBoard {
 
     }
 
-    //Whether or not a mole is up or down in a spot
+    /**
+     * Whether or not a mole is up or down in a spot
+     */
     public enum Spot{
         UP, DOWN
     }
 
-    //Status of the game
+    /**
+     * Status of the game
+     */
     public enum Status{
         WIN, LOSE, TIE, ERROR, RUNNING
     }
@@ -77,7 +81,7 @@ public class WAMBoard {
     public long getTimeLeft(){
         long currentMs = System.currentTimeMillis() - this.time;
         long currentTime = currentMs/1000;
-        return this.gameTime - currentTime;
+        return currentTime - this.gameTime;
     }
 
     public long getGameTime(){
@@ -101,28 +105,41 @@ public class WAMBoard {
         this.observerlist.add(observer);
     }
 
-    //Sets the Status of the board to lose and alerts observers
+    /**
+     * Sets the Status of the board to lose and alerts observers
+     */
     public void gameLost(){
         this.status = Status.LOSE;
         alertObservers();
     }
 
-    //Sets the Status of the board to tied and alerts observers
+    /**
+     * Sets the Status of the board to tied and alerts observers
+     */
     public void gameTied(){
         this.status = Status.TIE;
         alertObservers();
     }
-    //Sets the Status of the board to win and alerts observers
+
+    /**
+     * Sets the Status of the board to win and alerts observers
+     */
     public void gameWon(){
         this.status = Status.WIN;
         alertObservers();
     }
-    //Sets the Status of the board to error and alerts observers
+
+    /**
+     * Sets the Status of the board to error and alerts observers
+     */
     public void error(){
         this.status = Status.ERROR;
         alertObservers();
     }
-    //alerts the observers
+
+    /**
+     * alerts the observer to update
+     */
     public void alertObservers(){
         for(Observer<WAMBoard> observs: this.observerlist){
             observs.update(this);
@@ -141,7 +158,10 @@ public class WAMBoard {
         return this.status;
     }
 
-    //Sets the mole in a certain spot to up
+    /**
+     *Sets the mole in a certain spot to up
+     * @param num number representing the spot
+     */
     public void MoleUp(int num){
         int[] spot = this.getSpot(num);
         this.WAMboard[spot[0]][spot[1]] = Spot.UP;
@@ -149,7 +169,10 @@ public class WAMBoard {
 
     }
 
-    //Sets the mole in a certain spot to down
+    /**
+     * Sets the mole in a certain spot to down
+     * @param num number representing the spot
+     */
     public void MoleDown(int num){
         int[] spot = this.getSpot(num);
         this.WAMboard[spot[0]][spot[1]] = Spot.DOWN;
@@ -162,7 +185,7 @@ public class WAMBoard {
      * @return the spot on the board
      */
     private int[] getSpot(int num){
-        int row = num/this.rows;
+        int row = num/this.cols;
         int col = num%this.cols;
         int[] spot = new int[2];
         spot[0] = row;
@@ -170,10 +193,15 @@ public class WAMBoard {
         return spot;
     }
 
+    /**
+     * @return the number of rows on the board
+     */
     public int getRows(){
         return this.rows;
     }
-
+    /**
+     * @return the number of columns on the board
+     */
     public int getCols(){
         return this.cols;
     }

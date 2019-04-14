@@ -74,7 +74,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
             this.buttons = new Button[row][col];
 
-            this.label = new Label(this.whackBoard.getGameTime() + " seconds left");
+            this.label = new Label(this.whackBoard.getGameTime() + " seconds passed");
 
         }
         catch (WAMException | ArrayIndexOutOfBoundsException | NumberFormatException e){
@@ -164,7 +164,6 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         }
 
         WAMBoard.Status status = this.whackBoard.getStatus();
-        System.out.println(status);
         switch (status) {
             case TIE:
                 this.label.setText("You tied");
@@ -179,7 +178,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
                 this.label.setText(status.toString());
                 break;
             default:
-                this.label.setText(this.whackBoard.getTimeLeft() + " time left");
+                this.label.setText(this.whackBoard.getTimeLeft() + " seconds passed");
                 //do points here later
         }
 
@@ -191,7 +190,6 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
      */
     @Override
     public void update(WAMBoard whackBoard){
-        System.out.println("update");
         if (Platform.isFxApplicationThread()){
             this.refresh();
         }
