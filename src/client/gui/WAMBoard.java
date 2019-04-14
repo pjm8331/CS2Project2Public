@@ -2,8 +2,6 @@ package client.gui;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.Random;
 
 /**
  * The model for the WAM game
@@ -33,7 +31,13 @@ public class WAMBoard {
     //Duration of the game
     private long gameTime;
 
-    //Default constructor for WAMboard
+    /**
+     * Constructor for WAMBoard
+     * @param rows number of rows the board has
+     * @param cols number of columns the board has
+     * @param players number of players the board has
+     * @param time amount of time allotted for the board to run
+     */
     public WAMBoard(int rows, int cols, int players, long time){
         this.rows = rows;
         this.cols = cols;
@@ -91,38 +95,47 @@ public class WAMBoard {
         this.observerlist.add(observer);
     }
 
+    //Sets the Status of the board to lose and alerts observers
     public void gameLost(){
         this.status = Status.LOSE;
         alertObservers();
     }
+
+    //Sets the Status of the board to tied and alerts observers
     public void gameTied(){
         this.status = Status.TIE;
         alertObservers();
     }
+    //Sets the Status of the board to win and alerts observers
     public void gameWon(){
         this.status = Status.WIN;
         alertObservers();
     }
-
+    //Sets the Status of the board to error and alerts observers
     public void error(){
         this.status = Status.ERROR;
         alertObservers();
     }
-
+    //alerts the observers
     public void alertObservers(){
         for(Observer<WAMBoard> observs: this.observerlist){
             observs.update(this);
         }
     }
-
+    //close the board
     public void close(){
         alertObservers();
     }
 
+    /**
+     * get status
+     * @return the current status of the board
+     */
     public Status getStatus(){
         return this.status;
     }
 
+    //Sets the mole in a certain spot to up
     public void MoleUp(int num){
         int[] spot = this.getSpot(num);
         this.WAMboard[spot[0]][spot[1]] = Spot.UP;
@@ -130,13 +143,18 @@ public class WAMBoard {
 
     }
 
+    //Sets the mole in a certain spot to down
     public void MoleDown(int num){
         int[] spot = this.getSpot(num);
         this.WAMboard[spot[0]][spot[1]] = Spot.DOWN;
         alertObservers();
     }
 
-
+    /**
+     * returns a spot on the board
+     * @param num input number
+     * @return the spot on the board
+     */
     private int[] getSpot(int num){
         int row = num/this.rows;
         int col = num%this.cols;
