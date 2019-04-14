@@ -31,7 +31,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
     private Button[][] buttons;
 
-    private TextField textField;
+    private Label label;
 
     private int row;
 
@@ -58,7 +58,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
             if (players < 1){
                 throw new WAMException();
             }
-            int time = Integer.parseInt(args.get(4));
+            long time = Long.parseLong(args.get(4));
 
             this.whackBoard = new WAMBoard(row, col, players, time);
 
@@ -68,7 +68,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
             this.buttons = new Button[row][col];
 
-            this.textField = new TextField(time + " time left");
+            this.label = new Label(time + " time left");
 
         }
         catch (WAMException | ArrayIndexOutOfBoundsException | NumberFormatException e){
@@ -80,16 +80,13 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
     public void start(Stage stage) throws Exception{
         GridPane gridPane = new GridPane();
 
-        Image down = new Image(getClass().getResourceAsStream("Moledown.png"));
+        Image down = new Image(getClass().getResourceAsStream("Moledown.jpg"));
 
         for (int i = 0; i < this.col; i++){
             for (int j = 0; j < this.row; j++){
                 Button button = new Button();
                 button.setPrefSize(80, 80);
                 button.setGraphic(new ImageView(down));
-
-                button.setOnAction((actionEvent) -> {
-                });
 
                 this.buttons[j][i] = button;
 
@@ -99,7 +96,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
         BorderPane borderPane = new BorderPane();
 
-        HBox hBox = new HBox(this.textField);
+        HBox hBox = new HBox(this.label);
 
         borderPane.setBottom(hBox);
         borderPane.setCenter(gridPane);
@@ -108,6 +105,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
         stage.setTitle("Whack a mole");
         stage.setScene(scene);
+        stage.show();
 
         this.whackClient.startListener();
 
@@ -120,7 +118,9 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
     private void refresh(){
         Image up = new Image(getClass().getResourceAsStream("Moleup.png"));
-        Image down = new Image(getClass().getResourceAsStream("Moledown.png"));
+        Image down = new Image(getClass().getResourceAsStream("Moledown.jpg"));
+
+        this.whackBoard.popUp();
 
         for (int i = 0; i < this.col; i++) {
             for (int j = 0; j < this.row; j++) {
@@ -139,20 +139,20 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
         switch (status) {
             case TIE:
-                this.textField.setText("You tied");
+                this.label.setText("You tied");
                 break;
             case WIN:
-                this.textField.setText("You win");
+                this.label.setText("You win");
                 break;
             case LOSE:
-                this.textField.setText("You lose");
+                this.label.setText("You lose");
                 break;
             case ERROR:
-                this.textField.setText(status.toString());
+                this.label.setText(status.toString());
                 break;
 
             default:
-                this.textField.setText(this.whackBoard.getTimeLeft() + " time left");
+                this.label.setText(this.whackBoard.getTimeLeft() + " time left");
                 //do points here later
         }
 

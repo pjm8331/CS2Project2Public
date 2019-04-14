@@ -46,8 +46,8 @@ public class WAMClient {
 
     private void makeMove(){
         this.wamBoard.makeMove();
-
     }
+
     private static void print(Object logmsg){
         if (WAMClient.Debug){
             System.out.println(logmsg);
