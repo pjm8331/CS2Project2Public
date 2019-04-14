@@ -27,7 +27,6 @@ public class WAMClient {
     public WAMClient(String host, int port, WAMBoard wamBoard) throws WAMException{
         try {
             this.clientSocket = new Socket(host, port);
-            this.wamBoard = wamBoard;
             this.in = new Scanner(clientSocket.getInputStream());
             this.out = new PrintStream(clientSocket.getOutputStream());
             this.go = true;
@@ -39,13 +38,15 @@ public class WAMClient {
                 throw new WAMException();
             }
             WAMClient.print("Connected to server" + this.clientSocket);
+
+            this.wamBoard = wamBoard;
+
         }
-        catch (IOException e){}
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void makeMove(){
-        this.wamBoard.makeMove();
-    }
 
     private static void print(Object logmsg){
         if (WAMClient.Debug){
@@ -81,16 +82,18 @@ public class WAMClient {
                 String input = this.in.next();
                 String args = this.in.nextLine().trim();
 
+                System.out.println(input + " " + args);
                 switch(input){
-                    case WELCOME:
                     case MOLE_UP:
                         String[] fields = args.trim().split( " " );
                         int spot = Integer.parseInt(fields[0]);
                         this.wamBoard.MoleUp(spot);
+                        break;
                     case MOLE_DOWN:
                         String[] fields2 = args.trim().split( " " );
                         int spot2 = Integer.parseInt(fields2[0]);
                         this.wamBoard.MoleDown(spot2);
+                        break;
                     case WHACK:
                     case GAME_LOST:
                         System.out.print(GAME_LOST);
