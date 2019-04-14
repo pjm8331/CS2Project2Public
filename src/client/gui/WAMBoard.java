@@ -38,7 +38,10 @@ public class WAMBoard {
      * @param players number of players the board has
      * @param time amount of time allotted for the board to run
      */
-    public WAMBoard(int rows, int cols, int players, long time){
+    public WAMBoard(int rows, int cols, int players, long time) throws WAMException{
+        if (players < 1){
+            throw new WAMException("Missing players");
+        }
         this.rows = rows;
         this.cols = cols;
         this.players = players;
@@ -77,6 +80,9 @@ public class WAMBoard {
         return this.gameTime - currentTime;
     }
 
+    public long getGameTime(){
+        return this.gameTime;
+    }
     /**
      * Check whether or not a spot is up or down
      * @param col column of spot
@@ -163,5 +169,15 @@ public class WAMBoard {
         spot[1] = col;
         return spot;
     }
+
+    public int getRows(){
+        return this.rows;
+    }
+
+    public int getCols(){
+        return this.cols;
+    }
+
+
 
 }

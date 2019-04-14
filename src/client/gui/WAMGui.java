@@ -57,33 +57,24 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         try{
             List<String> args = getParameters().getRaw();
 
-            String host = "dione.cs.rit.edu";
+            String host = args.get(0);
 
-            int port = Integer.parseInt(args.get(0));
+            int port = Integer.parseInt(args.get(1));
 
-            int row = Integer.parseInt(args.get(1));
-            this.row = row;
 
-            int col = Integer.parseInt(args.get(2));
-            this.col = col;
+            this.whackClient = new WAMClient(host ,port);
 
-            int players = Integer.parseInt(args.get(3));
-
-            if (players < 1){
-                throw new WAMException("Missing players");
-            }
-            long time = Long.parseLong(args.get(4));
-
-            this.whackBoard = new WAMBoard(row, col, players, time);
+            this.whackBoard = this.whackClient.getWamBoard();
 
             this.whackBoard.addObserver(this);
-            System.out.println("added");
 
-            this.whackClient = new WAMClient(host,port, this.whackBoard );
+            this.row = this.whackBoard.getRows();
+
+            this.col = this.whackBoard.getCols();
 
             this.buttons = new Button[row][col];
 
-            this.label = new Label(time + " time left");
+            this.label = new Label(this.whackBoard.getGameTime() + " seconds left");
 
         }
         catch (WAMException | ArrayIndexOutOfBoundsException | NumberFormatException e){
@@ -98,7 +89,6 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
      * @throws Exception
      */
     public void start(Stage stage) throws Exception{
-        System.out.println("started");
         GridPane gridPane = new GridPane();
 
         Image down = new Image(getClass().getResourceAsStream("Moledown.jpg"));
@@ -149,12 +139,9 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
      * keeps track of mole up, time, and score visually
      */
     private void refresh(){
-        System.out.println("refresh");
+
         Image up = new Image(getClass().getResourceAsStream("Moleup.png"));
         Image down = new Image(getClass().getResourceAsStream("Moledown.jpg"));
-
-
-
 
         for (int i = 0; i < this.col; i++) {
             for (int j = 0; j < this.row; j++) {
@@ -219,8 +206,8 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
      * @param args
      */
     public static void main(String[] args){
-        if (args.length != 5){
-            System.out.println("Usage: java WAMGui game-port# #rows #columns #players game-duration-seconds.");
+        if (args.length != 2){
+            System.out.println("Usage: java WAMGui host game-port# .");
             System.exit(-1);
         }
         Application.launch(args);

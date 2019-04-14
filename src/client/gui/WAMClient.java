@@ -24,7 +24,7 @@ public class WAMClient {
     private boolean go;
 
 
-    public WAMClient(String host, int port, WAMBoard wamBoard) throws WAMException{
+    public WAMClient(String host, int port) throws WAMException{
         try {
             this.clientSocket = new Socket(host, port);
             this.in = new Scanner(clientSocket.getInputStream());
@@ -32,14 +32,23 @@ public class WAMClient {
             this.go = true;
 
             String request = this.in.next();
-            String args = this.in.nextLine();
+            String args = this.in.nextLine().trim();
+
+            String[] fields = args.trim().split( " " );
+
+            int rows = Integer.parseInt(fields[0]);
+            int cols = Integer.parseInt(fields[1]);
+            int players = Integer.parseInt(fields[2]);
+            int time = Integer.parseInt(fields[3]);
+
+            this.wamBoard = new WAMBoard(rows, cols, players, time);
+
 
             if (!request.equals(WELCOME)){
                 throw new WAMException("No welcome message");
             }
             WAMClient.print("Connected to server" + this.clientSocket);
 
-            this.wamBoard = wamBoard;
 
         }
         catch (IOException e) {
@@ -47,6 +56,10 @@ public class WAMClient {
         }
     }
 
+
+    public WAMBoard getWamBoard(){
+        return this.wamBoard;
+    }
 
     private static void print(Object logmsg){
         if (WAMClient.Debug){
