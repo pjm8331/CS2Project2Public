@@ -56,6 +56,7 @@ public class WAMClient {
             int players = Integer.parseInt(fields[2]);
             int time = Integer.parseInt(fields[3]);
 
+
             this.wamBoard = new WAMBoard(rows, cols, players, time);
 
             if (!request.equals(WELCOME)){
@@ -144,20 +145,16 @@ public class WAMClient {
                         break;
                     case WHACK:
                     case GAME_LOST:
-                        System.out.print(GAME_LOST);
-                        System.out.print("Lost Game!");
+
                         this.wamBoard.gameLost();
                         this.stop();
                         break;
                     case GAME_TIED:
-                        System.out.print(GAME_TIED);
-                        System.out.print("Tied Game!");
                         this.wamBoard.gameTied();
                         this.stop();
                         break;
                     case GAME_WON:
-                        System.out.print(GAME_WON);
-                        System.out.print("Won Game!");
+
                         this.wamBoard.gameWon();
                         this.stop();
                         break;
