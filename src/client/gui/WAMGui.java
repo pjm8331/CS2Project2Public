@@ -70,7 +70,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
             int players = Integer.parseInt(args.get(3));
 
             if (players < 1){
-                throw new WAMException();
+                throw new WAMException("Missing players");
             }
             long time = Long.parseLong(args.get(4));
 

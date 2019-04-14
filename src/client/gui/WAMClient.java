@@ -35,7 +35,7 @@ public class WAMClient {
             String args = this.in.nextLine();
 
             if (!request.equals(WELCOME)){
-                throw new WAMException();
+                throw new WAMException("No welcome message");
             }
             WAMClient.print("Connected to server" + this.clientSocket);
 
