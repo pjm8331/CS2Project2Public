@@ -23,8 +23,7 @@ public class WAMClient {
 
     private boolean go;
 
-    //finish not done
-    //todo
+
     public WAMClient(String host, int port, WAMBoard wamBoard) throws WAMException{
         try {
             this.clientSocket = new Socket(host, port);
@@ -76,7 +75,6 @@ public class WAMClient {
         this.wamBoard.close();
     }
 
-
     private void run(){
         while(this.getGo()){
             try{
@@ -86,7 +84,13 @@ public class WAMClient {
                 switch(input){
                     case WELCOME:
                     case MOLE_UP:
+                        String[] fields = args.trim().split( " " );
+                        int spot = Integer.parseInt(fields[0]);
+                        this.wamBoard.MoleUp(spot);
                     case MOLE_DOWN:
+                        String[] fields2 = args.trim().split( " " );
+                        int spot2 = Integer.parseInt(fields2[0]);
+                        this.wamBoard.MoleDown(spot2);
                     case WHACK:
                     case GAME_LOST:
                         System.out.print(GAME_LOST);
@@ -117,6 +121,7 @@ public class WAMClient {
                         break;
                 }
             }
+
             catch( NoSuchElementException e){
                 System.out.print("Lost connection: " + e);
                 this.stop();

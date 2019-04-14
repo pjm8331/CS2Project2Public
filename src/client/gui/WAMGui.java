@@ -120,23 +120,22 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
         Image up = new Image(getClass().getResourceAsStream("Moleup.png"));
         Image down = new Image(getClass().getResourceAsStream("Moledown.jpg"));
 
-        this.whackBoard.popUp();
 
         for (int i = 0; i < this.col; i++) {
             for (int j = 0; j < this.row; j++) {
                 WAMBoard.Spot spot = this.whackBoard.isDown(i, j);
 
                 if (spot == WAMBoard.Spot.UP){
-                    this.buttons[i][j].setGraphic(new ImageView(up));
+                    this.buttons[j][i].setGraphic(new ImageView(up));
                 }
-                else if (spot == WAMBoard.Spot.DOWN){
-                    this.buttons[i][j].setGraphic(new ImageView(down));
+                else{
+                    this.buttons[j][i].setGraphic(new ImageView(up));
                 }
             }
         }
 
         WAMBoard.Status status = this.whackBoard.getStatus();
-
+        System.out.println(status);
         switch (status) {
             case TIE:
                 this.label.setText("You tied");
@@ -150,7 +149,6 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
             case ERROR:
                 this.label.setText(status.toString());
                 break;
-
             default:
                 this.label.setText(this.whackBoard.getTimeLeft() + " time left");
                 //do points here later

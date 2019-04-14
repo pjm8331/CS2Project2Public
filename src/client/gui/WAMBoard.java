@@ -50,7 +50,7 @@ public class WAMBoard {
     }
 
     public enum Status{
-        WIN, LOSE, TIE, ERROR, RUNNING
+        WIN, LOSE, TIE, ERROR, RUNNING, MoleUp, MoleDown
     }
 
     public long getTimeLeft(){
@@ -99,15 +99,17 @@ public class WAMBoard {
         return this.status;
     }
 
-    public void popUp(){
-        try {
-            TimeUnit.SECONDS.sleep(getRand(0, 5));
-        }
-        catch (InterruptedException e){}
-        int num = (this.rows * this.cols) - 1;
-        int spot = getRand(0, num);
-        int[] rowcol = getSpot(spot);
-        this.WAMboard[rowcol[1]][rowcol[0]] = Spot.UP;
+    public void MoleUp(int num){
+        int[] spot = this.getSpot(num);
+        this.WAMboard[spot[0]][spot[1]] = Spot.UP;
+        alertObservers();
+
+    }
+
+    public void MoleDown(int num){
+        int[] spot = this.getSpot(num);
+        this.WAMboard[spot[0]][spot[1]] = Spot.DOWN;
+        alertObservers();
     }
 
 
@@ -120,8 +122,4 @@ public class WAMBoard {
         return spot;
     }
 
-    private static int getRand(int min, int max) {
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
-    }
 }
