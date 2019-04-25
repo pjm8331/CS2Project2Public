@@ -1,4 +1,10 @@
 package server;
 
-public class WAMPlayer {
+import common.WAMProtocol;
+
+import java.io.Closeable;
+
+public class WAMPlayer implements WAMProtocol, Closeable {
+
+    public void close(){}
 }
