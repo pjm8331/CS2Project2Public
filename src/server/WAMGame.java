@@ -17,7 +17,7 @@ public class WAMGame implements Runnable{
 
     private long startTime;
 
-    public WAMGame(int row, int col, int players, int time){
+    public WAMGame(int row, int col, ArrayList<WAMPlayer> players, int time){
 
         this.row = row;
 
@@ -25,16 +25,11 @@ public class WAMGame implements Runnable{
 
         this.time = time * 1000 ;
 
-        this.wamPlayers = new ArrayList<WAMPlayer>();
+        this.wamPlayers = players;
 
         this.startTime = System.currentTimeMillis();
 
         this.time = this.startTime + this.time;
-
-        for (int i = 0; i < players; i++){
-            WAMPlayer player = new WAMPlayer();
-            this.wamPlayers.add(player);
-        }
 
         this.wamGame = new WAM();
     }

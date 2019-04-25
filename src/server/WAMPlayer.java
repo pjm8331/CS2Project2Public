@@ -29,7 +29,45 @@ public class WAMPlayer implements WAMProtocol, Closeable {
     }
 
     public void connect(){
-        printStream.println(CONNECT);
+        printStream.println(WELCOME);
     }
-    public void close(){}
+
+    public void moleUp(){
+        printStream.println(MOLE_UP);
+    }
+
+    public void moleDown(){
+        printStream.println(MOLE_DOWN);
+    }
+
+    public void whack(){
+        printStream.println(WHACK);
+    }
+
+    public void gameLost(){
+        printStream.println(GAME_LOST);
+    }
+
+    public void gameWon(){
+        printStream.println(GAME_WON);
+    }
+
+    public void gameTied(){
+        printStream.println(GAME_TIED);
+    }
+
+    public void error(String message){
+        printStream.println(ERROR + " " + message);
+    }
+
+    public int makeWhack(){
+        return 0;
+    }
+
+    public void close(){
+        try{
+            socket.close();
+        }
+        catch (IOException e){}
+    }
 }
