@@ -6,6 +6,7 @@ import common.WAMProtocol;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Handles the creation of the players, the game, and all sockets for communication
@@ -67,12 +68,12 @@ public class WAMServer implements WAMProtocol, Runnable {
     @Override
     public void run(){
         try{
-            WAMPlayer[] Player = new WAMPlayer[this.players];
+            ArrayList<WAMPlayer> Player = new ArrayList<>();
            for(int i = 0; i<this.players; i++){
                System.out.print("Waiting for player " + (i+1) + "...");
                Socket playerSocket = server.accept();
            System.out.println("Player " + (i+1) +" connected!");
-               Player[i] = new WAMPlayer(playerSocket);
+               Player.add(new WAMPlayer(playerSocket));
            }
            WAMGame game = new WAMGame(this.rows, this.cols, Player, this.time);
            new Thread(game).run();
