@@ -97,6 +97,13 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
             for (int j = 0; j < this.row; j++){
                 Button button = new Button();
                 button.setPrefSize(80, 80);
+
+                final int col = i;
+                final int row = j;
+
+                button.setOnAction((ActionEvent) -> {
+                    this.whackClient.sendWhack(row, col);
+                });
                 ImageView view = new ImageView(down);
                 view.setFitWidth(80);
                 view.setFitHeight(80);

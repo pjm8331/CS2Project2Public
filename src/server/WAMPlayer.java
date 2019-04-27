@@ -17,8 +17,11 @@ public class WAMPlayer implements WAMProtocol, Closeable {
 
     private PrintStream printStream;
 
+    private int score;
+
     public WAMPlayer(Socket socket) throws WAMException{
         this.socket = socket;
+        this.score = 0;
         try {
             this.scanner = new Scanner(socket.getInputStream());
             this.printStream = new PrintStream(socket.getOutputStream());
@@ -60,8 +63,22 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         printStream.println(ERROR + " " + message);
     }
 
-    public int makeWhack(){
-        return 0;
+    public int makeWhack() throws WAMException{
+        String response = scanner.nextLine();
+
+        if (response.startsWith(WHACK)){
+            String[] tokens =response.split(" ");
+            if(tokens.length == 2) {
+                if (g)
+            }
+            else {
+                throw new WAMException("Invalid response");
+            }
+
+        }
+        else {
+            throw new WAMException("Invalid response");
+        }
     }
 
     public void close(){
