@@ -17,7 +17,7 @@ public class WAMGame implements Runnable{
 
     private long startTime;
 
-    public WAMGame(int row, int col, ArrayList<WAMPlayer> players, int time){
+    public WAMGame(int row, int col, ArrayList<WAMPlayer> players, int time, WAM wamGame){
 
         this.row = row;
 
@@ -31,7 +31,8 @@ public class WAMGame implements Runnable{
 
         this.time = this.startTime + this.time;
 
-        this.wamGame = new WAM();
+        this.wamGame = wamGame;
+
     }
 
     //go will correspond to time
