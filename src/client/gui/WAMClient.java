@@ -77,6 +77,10 @@ public class WAMClient {
         return this.wamBoard;
     }
 
+    public void sendWhack(int row, int col){
+        this.out.println(WHACK + row + " " + col);
+    }
+
     /**
      * Only prints if debug is true
      * @param msg message to be printed out
