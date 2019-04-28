@@ -35,6 +35,14 @@ public class WAM {
         return this.board[row][col];
     }
 
+    public int getRows(){
+        return this.rows;
+    }
+
+    public int getCols(){
+        return this.cols;
+    }
+
     public int[] getSpotNum(int num){
         int row = num/this.cols;
         int col = num%this.cols;

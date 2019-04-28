@@ -56,6 +56,15 @@ public class WAMGame implements Runnable{
             }
             index++;
         }
+
+        for (int i = 0; i < this.wamPlayers.size(); i++){
+            if (i == index){
+                this.wamPlayers.get(i).gameWon();
+            }
+            else {
+                this.wamPlayers.get(i).gameLost();
+            }
+        }
         for (WAMPlayer player : this.wamPlayers){
             player.close();
         }

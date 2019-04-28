@@ -56,7 +56,6 @@ public class WAMClient {
             int players = Integer.parseInt(fields[2]);
             int time = Integer.parseInt(fields[3]);
 
-
             this.wamBoard = new WAMBoard(rows, cols, players, time);
 
             if (!request.equals(WELCOME)){

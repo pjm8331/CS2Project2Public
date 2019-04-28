@@ -36,6 +36,9 @@ public class WAMPlayer implements WAMProtocol, Closeable {
 
     public void connect(){
         printStream.println(WELCOME);
+        printStream.println(this.wamGame.getRows() + " " + this.wamGame.getCols() + " " +
+                1 + " " + 100);
+
     }
 
     public void moleUp(int spot){
