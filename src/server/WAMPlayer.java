@@ -122,7 +122,7 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
             }
             if (scanner.hasNextLine()) {
                 String response = scanner.nextLine();
-                if (response == " " || response == ""){
+                if ((response.equals(" ")) || (response.equals("")) || (response.equals("\n"))){
                     break;
                 }
                 if (response.startsWith(WHACK)) {

@@ -40,10 +40,10 @@ public class WAM {
         this.rows = rows;
         this.cols = cols;
         this.status = Status.RUNNING;
-        this.board = new Mole[cols][rows];
+        this.board = new Mole[rows][cols];
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
-                board[col][row] = Mole.DOWN;
+                board[row][col] = Mole.DOWN;
             }
         }
     }
