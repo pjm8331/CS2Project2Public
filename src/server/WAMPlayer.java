@@ -37,11 +37,9 @@ public class WAMPlayer implements WAMProtocol, Closeable{
         }
     }
 
-    public void connect(int playernum){
+    public void connect(){
         printStream.println(WELCOME + " " + this.wamGame.getRows() + " " +
-                this.wamGame.getCols() + " " + 1 + " " + playernum);
-
-
+                this.wamGame.getCols() + " " + 1 + " " + this.playerNum);
     }
 
     public void moleUp(int spot){
@@ -79,19 +77,19 @@ public class WAMPlayer implements WAMProtocol, Closeable{
     public void makeWhack() throws WAMException{
         String response = scanner.nextLine();
 
-        System.out.println(response);
         if (response.startsWith(WHACK)){
             String[] tokens = response.split(" ");
-            if(tokens.length == 3) {
+            if(tokens.length == 4) {
+                if (Integer.parseInt(tokens[3]) == this.playerNum) {
 
-                if (this.wamGame.getSpot(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2])) == WAM.Mole.UP){
-                    this.score += 1;
-                    printStream.println(MOLE_DOWN + " " + Integer.parseInt(tokens[1]) * Integer.parseInt(tokens[2]));
-                    printStream.println(SCORE + " " + score);
-                }
-                else{
-                    this.score -= 1;
-                    printStream.println(SCORE + " " + score);
+                    if (this.wamGame.getSpot(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2])) == WAM.Mole.UP) {
+                        this.score += 1;
+                        printStream.println(MOLE_DOWN + " " + Integer.parseInt(tokens[1]) * Integer.parseInt(tokens[2]));
+                        printStream.println(SCORE + " " + score);
+                    } else {
+                        this.score -= 1;
+                        printStream.println(SCORE + " " + score);
+                    }
                 }
             }
             else {

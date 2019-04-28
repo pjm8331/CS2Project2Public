@@ -84,19 +84,8 @@ public class WAM {
 
     public void update(ArrayList<WAMPlayer> players) {
         server.Mole mole = new server.Mole(this.getRows(), this.getCols(), this, players );
-        server.Mole mole1 = new server.Mole(this.getRows(), this.getCols(), this, players );
-        server.Mole mole2 = new server.Mole(this.getRows(), this.getCols(), this, players );
-        server.Mole mole3 = new server.Mole(this.getRows(), this.getCols(), this, players );
-        server.Mole mole4 = new server.Mole(this.getRows(), this.getCols(), this, players );
-        server.Mole mole5 = new server.Mole(this.getRows(), this.getCols(), this, players );
 
         mole.run();
-        mole1.run();
-        mole2.run();
-        mole3.run();
-        mole4.run();
-        mole5.run();
-
 
     }
 }

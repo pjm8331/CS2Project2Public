@@ -58,6 +58,8 @@ public class WAMClient {
             int players = Integer.parseInt(fields[2]);
             int playerNum = Integer.parseInt(fields[3]);
 
+            this.playerNum = playerNum;
+
             this.wamBoard = new WAMBoard(rows, cols, playerNum);
 
             if (!request.equals(WELCOME)){
@@ -79,7 +81,7 @@ public class WAMClient {
     }
 
     public void sendWhack(int row, int col){
-        this.out.println(WHACK + " " + row + " " + col + " " + playerNum);
+        this.out.println(WHACK + " " + row + " " + col + " " + this.playerNum);
     }
 
     /**
