@@ -109,17 +109,6 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
         printStream.println(ERROR + " " + message);
     }
 
-    /**
-     * @return the scanner of the player
-     */
-    public Scanner getScanner(){
-        return this.scanner;
-    }
-
-    public synchronized void makeWhack()throws WAMException{
-
-    }
-
 
     /**
      * Runs the player
@@ -185,9 +174,7 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
     public boolean equals(Object other){
         if (other instanceof WAMPlayer) {
             WAMPlayer player = (WAMPlayer) other;
-            if (player.playerNum == ((WAMPlayer) other).playerNum){
-                return true;
-            }
+            return player.playerNum == this.playerNum;
         }
 
        return false;

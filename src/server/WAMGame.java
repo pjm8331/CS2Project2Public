@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 /**
  * Handles the game logic
+ * NOTE: Double click mouse when playing game
+ * Doesn't appear to count whack unless double clicked
  * @author John Baxley(jmb3471)
  * @author Peter Mastropaolo(pjm8331)
  */
@@ -66,16 +68,20 @@ public class WAMGame implements Runnable{
             }
         }
         this.wamGame.changeStatus(WAM.Status.NOT);
-        int score = 0;
-        int index = -1;
+        int score = this.wamPlayers.get(0).getScore();
+        int index = 0;
         ArrayList<WAMPlayer> tied = new ArrayList<WAMPlayer>();
         ArrayList<Integer> tiedNum = new ArrayList<Integer>();
+        ArrayList<WAMPlayer> loser = new ArrayList<WAMPlayer>();
+        WAMPlayer winner = this.wamPlayers.get(0);
 
         //Checks for clear winner
-        for (int i = 0; i < this.wamPlayers.size(); i++){
+        for (int i = 1; i < this.wamPlayers.size(); i++){
             if (score < this.wamPlayers.get(i).getScore()){
+                loser.add(winner);
                 score = this.wamPlayers.get(i).getScore();
                 index = i;
+                winner = this.wamPlayers.get(i);
                 for (int j = 0; j < tied.size(); j++){
                     tied.remove(j);
                     tiedNum.remove(j);
@@ -93,22 +99,42 @@ public class WAMGame implements Runnable{
                     index = i;
                 }
             }
+            else {
+                loser.add(wamPlayers.get(i));
+            }
 
         }
 
+
+        if (tied.size() == 0){
+            winner.gameWon();
+            for (WAMPlayer wamPlayer : loser){
+                wamPlayer.gameLost();
+            }
+        }
+        else {
+            for (WAMPlayer wamPlayer : loser){
+                wamPlayer.gameTied();
+            }
+            for (WAMPlayer wamPlayer : loser){
+                wamPlayer.gameLost();
+            }
+        }
         //Sends messages for tied
         if (tied.size() != 0){
             for (WAMPlayer wamPlayer : this.wamPlayers) {
                 for (WAMPlayer wamPlayer1 : tied) {
-                    if (wamPlayer.equals(wamPlayer1  )) {
+                    if (wamPlayer.equals(wamPlayer1)) {
                         wamPlayer.gameTied();
-                    } else {
+                    }
+                    else {
                         wamPlayer.gameLost();
                     }
                 }
             }
 
         }
+
         //Sends messages for winners and losers
         for (int i = 0; i < this.wamPlayers.size(); i++){
             if (i == index){

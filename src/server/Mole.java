@@ -53,13 +53,6 @@ public class Mole extends Thread {
             player.moleUp(rand);
         }
 
-        for (WAMPlayer player : this.wamplayers){
-            try {
-                player.makeWhack();
-            }
-            catch (WAMException e){e.printStackTrace();}
-        }
-
         int rand2 = random.nextInt(2000) + 1500  ;
 
         try {
