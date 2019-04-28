@@ -4,6 +4,7 @@ import client.gui.WAMException;
 import common.WAMProtocol;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -69,13 +70,18 @@ public class WAMServer implements WAMProtocol, Runnable {
     public void run(){
         try{
             ArrayList<WAMPlayer> Player = new ArrayList<>();
+            WAM wam = new WAM(this.rows, this.cols);
+            WAMGame game = new WAMGame(this.rows, this.cols, Player, this.time, wam);
            for(int i = 0; i<this.players; i++){
                System.out.print("Waiting for player " + (i+1) + "...");
                Socket playerSocket = server.accept();
-           System.out.println("Player " + (i+1) +" connected!");
-               Player.add(new WAMPlayer(playerSocket));
+
+               System.out.println("Player " + (i+1) +" connected!");
+               WAMPlayer player = new WAMPlayer(playerSocket, wam);
+               player.connect();
+               Player.add(player);
            }
-           WAMGame game = new WAMGame(this.rows, this.cols, Player, this.time);
+            System.out.println("WORKING");
            new Thread(game).run();
         }
         catch(IOException e){

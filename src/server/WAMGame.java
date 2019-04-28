@@ -17,7 +17,7 @@ public class WAMGame implements Runnable{
 
     private long startTime;
 
-    public WAMGame(int row, int col, ArrayList<WAMPlayer> players, int time){
+    public WAMGame(int row, int col, ArrayList<WAMPlayer> players, int time, WAM wamGame){
 
         this.row = row;
 
@@ -31,7 +31,8 @@ public class WAMGame implements Runnable{
 
         this.time = this.startTime + this.time;
 
-        this.wamGame = new WAM();
+        this.wamGame = wamGame;
+
     }
 
     //go will correspond to time
@@ -41,8 +42,27 @@ public class WAMGame implements Runnable{
         long currentTime;
         while (go){
             currentTime = System.currentTimeMillis();
+            this.wamGame.update(this.wamPlayers);
             if (this.time == currentTime){
                 go = false;
+            }
+        }
+        WAMPlayer winner = this.wamPlayers.get(0);
+        int index = 0;
+
+        for (WAMPlayer player : this.wamPlayers){
+            if (winner.getScore() < player.getScore()){
+                winner = player;
+            }
+            index++;
+        }
+
+        for (int i = 0; i < this.wamPlayers.size(); i++){
+            if (i == index){
+                this.wamPlayers.get(i).gameWon();
+            }
+            else {
+                this.wamPlayers.get(i).gameLost();
             }
         }
         for (WAMPlayer player : this.wamPlayers){

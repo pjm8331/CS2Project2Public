@@ -19,9 +19,12 @@ public class WAMPlayer implements WAMProtocol, Closeable {
 
     private int score;
 
-    public WAMPlayer(Socket socket) throws WAMException{
+    private WAM wamGame;
+
+    public WAMPlayer(Socket socket, WAM wamGame) throws WAMException{
         this.socket = socket;
         this.score = 0;
+        this.wamGame = wamGame;
         try {
             this.scanner = new Scanner(socket.getInputStream());
             this.printStream = new PrintStream(socket.getOutputStream());
@@ -33,20 +36,26 @@ public class WAMPlayer implements WAMProtocol, Closeable {
 
     public void connect(){
         printStream.println(WELCOME);
+        printStream.println(this.wamGame.getRows() + " " + this.wamGame.getCols() + " " +
+                1 + " " + 100);
+
     }
 
-    public void moleUp(){
-        printStream.println(MOLE_UP);
+    public void moleUp(int spot){
+        printStream.println(MOLE_UP + spot);
     }
 
-    public void moleDown(){
-        printStream.println(MOLE_DOWN);
+    public void moleDown(int spot){
+        printStream.println(MOLE_DOWN + spot);
     }
 
     public void whack(){
         printStream.println(WHACK);
     }
 
+    public void score(){
+        printStream.println(SCORE + this.score);
+    }
     public void gameLost(){
         printStream.println(GAME_LOST);
     }
@@ -67,9 +76,16 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         String response = scanner.nextLine();
 
         if (response.startsWith(WHACK)){
-            String[] tokens =response.split(" ");
-            if(tokens.length == 2) {
-                if (g)
+            String[] tokens = response.split(" ");
+            if(tokens.length == 3) {
+                if (this.wamGame.getSpot(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2])) == WAM.Mole.UP){
+                    this.score += 1;
+                    return score;
+                }
+                else{
+                    this.score -= 1;
+                    return score;
+                }
             }
             else {
                 throw new WAMException("Invalid response");
@@ -79,6 +95,10 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         else {
             throw new WAMException("Invalid response");
         }
+    }
+
+    public int getScore(){
+        return this.score;
     }
 
     public void close(){

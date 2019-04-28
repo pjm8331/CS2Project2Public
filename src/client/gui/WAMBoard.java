@@ -16,6 +16,8 @@ public class WAMBoard {
     //Time when game started
     private long time;
 
+    private int score;
+
     //Number of the players
     private int players;
 
@@ -44,6 +46,7 @@ public class WAMBoard {
         }
         this.rows = rows;
         this.cols = cols;
+        this.score = 0;
         this.players = players;
         this.observerlist = new LinkedList<>();
         this.WAMboard = new Spot[rows][cols];
@@ -167,6 +170,14 @@ public class WAMBoard {
         this.WAMboard[spot[0]][spot[1]] = Spot.UP;
         alertObservers();
 
+    }
+
+    public void changeScore(int num){
+        this.score += num;
+    }
+
+    public int getScore(){
+        return this.score;
     }
 
     /**
