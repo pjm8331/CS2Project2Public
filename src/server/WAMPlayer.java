@@ -19,9 +19,9 @@ public class WAMPlayer implements WAMProtocol, Closeable {
 
     private int score;
 
-    private WAMGame wamGame;
+    private WAM wamGame;
 
-    public WAMPlayer(Socket socket, WAMGame wamGame) throws WAMException{
+    public WAMPlayer(Socket socket, WAM wamGame) throws WAMException{
         this.socket = socket;
         this.score = 0;
         try {
@@ -71,7 +71,7 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         if (response.startsWith(WHACK)){
             String[] tokens = response.split(" ");
             if(tokens.length == 3) {
-                if (this.wamGame.getSpot(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2])) == MOLE_UP){
+                if (this.wamGame.getSpot(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2])) == WAM.Mole.UP){
                     this.score += 1;
                     return score;
                 }

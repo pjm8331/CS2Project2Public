@@ -26,6 +26,10 @@ public class WAM {
         }
     }
 
+    public Mole getSpot(int row, int col){
+        return this.board[row][col];
+    }
+
     /**
      * Gets the board
      *

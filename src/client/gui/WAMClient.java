@@ -135,16 +135,15 @@ public class WAMClient {
             try{
                 String input = this.in.next();
                 String args = this.in.nextLine().trim();
+                String[] fields = args.trim().split( " " );
 
                 switch(input){
                     case MOLE_UP:
-                        String[] fields = args.trim().split( " " );
                         int spot = Integer.parseInt(fields[0]);
                         this.wamBoard.MoleUp(spot);
                         break;
                     case MOLE_DOWN:
-                        String[] fields2 = args.trim().split( " " );
-                        int spot2 = Integer.parseInt(fields2[0]);
+                        int spot2 = Integer.parseInt(fields[0]);
                         this.wamBoard.MoleDown(spot2);
                         break;
                     case WHACK:
@@ -158,11 +157,11 @@ public class WAMClient {
                         this.stop();
                         break;
                     case GAME_WON:
-
                         this.wamBoard.gameWon();
                         this.stop();
                         break;
                     case SCORE:
+                        this.wamBoard.changeScore(Integer.parseInt(fields[1]));
                     case ERROR:
                         System.out.print("Error!");
                         this.wamBoard.error();

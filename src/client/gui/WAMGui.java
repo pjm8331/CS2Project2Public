@@ -185,7 +185,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
                 this.label.setText(status.toString());
                 break;
             default:
-                this.label.setText(this.whackBoard.getTimeLeft() + " seconds passed");
+                this.label.setText("Score: " + this.whackBoard.getScore());
                 //do points here later
         }
 
