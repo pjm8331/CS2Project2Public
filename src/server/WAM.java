@@ -17,6 +17,9 @@ public class WAM {
     private static int cols;
 
 
+    /**
+     * Whether or not the game is running
+     */
     public enum Status {
         RUNNING, NOT
     }
@@ -27,8 +30,13 @@ public class WAM {
         UP, DOWN
     }
 
-    private Mole[][] board;
+    private Mole[][] board; //2d array of the whack-a-mole board
 
+    /**
+     * Constructor for the game
+     * @param rows how many rows the board will have
+     * @param cols how many columns the board will have
+     */
     public WAM(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
@@ -41,26 +49,50 @@ public class WAM {
         }
     }
 
+    /**
+     * method for changing the status
+     * @param status either RUNNING or NOT
+     */
     public void changeStatus(Status status){
         this.status = status;
     }
 
+    /**
+     * @return the status of the game
+     */
     public Status getStatus(){
         return this.status;
     }
 
+    /**
+     * gets the spot on the board
+     * @param row what row the spot is
+     * @param col what column the spot is
+     * @return the enum of the spot
+     */
     public Mole getSpot(int row, int col){
         return this.board[row][col];
     }
 
+    /**
+     * @return the number of rows on the board
+     */
     public int getRows(){
         return this.rows;
     }
 
+    /**
+     * @return the number of columns on the board
+     */
     public int getCols(){
         return this.cols;
     }
 
+    /**
+     * gets the row and column based on the number given
+     * @param num number used to determine the spot
+     * @return the row and column of the board spot
+     */
     public int[] getSpotNum(int num){
         int row = num/this.cols;
         int col = num%this.cols;
@@ -72,7 +104,6 @@ public class WAM {
 
     /**
      * Gets the board
-     *
      * @return the board
      */
     public Mole[][] getBoard() {
@@ -98,6 +129,10 @@ public class WAM {
         this.board[row][col] = Mole.UP;
     }
 
+    /**
+     * creates and runs mole threads
+     * @param players list of players in the game
+     */
     public void update(ArrayList<WAMPlayer> players) {
         Random random = new Random();
         int rand = random.nextInt(rows * cols);
