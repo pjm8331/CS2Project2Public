@@ -1,5 +1,10 @@
 package server;
 
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+
 /**
  * Handles the game logic
  *@author John Baxley(jmb3471)
@@ -30,6 +35,15 @@ public class WAM {
         return this.board[row][col];
     }
 
+    public int[] getSpotNum(int num){
+        int row = num/this.cols;
+        int col = num%this.cols;
+        int[] spot = new int[2];
+        spot[0] = row;
+        spot[1] = col;
+        return spot;
+    }
+
     /**
      * Gets the board
      *
@@ -39,17 +53,35 @@ public class WAM {
         return this.board;
     }
 
-    public void update() {
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                double rand = Math.random();
+    public void update(ArrayList<WAMPlayer> players){
+        try {
+            Random random = new Random();
+            int rand = random.nextInt(rows * cols);
 
-                if (rand % 2 == 0) {
-                    board[col][row] = Mole.UP;
-                } else {
-                    board[col][row] = Mole.DOWN;
-                }
+            int[] spot = getSpotNum(rand);
+
+            this.board[spot[0]][spot[1]] = Mole.UP;
+
+            for (WAMPlayer player : players) {
+                player.moleUp(rand);
+            }
+
+            int rand2 = random.nextInt(3000) + 1000;
+
+            TimeUnit.MILLISECONDS.sleep(rand2);
+
+            this.board[spot[0]][spot[1]] = Mole.DOWN;
+
+            for (WAMPlayer player : players){
+                player.moleDown(rand);
             }
         }
+        catch (InterruptedException e){
+            for (WAMPlayer player : players){
+                player.error("Interrupted");
+            }
+        }
+
+
     }
 }

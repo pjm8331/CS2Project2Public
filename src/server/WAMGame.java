@@ -42,7 +42,7 @@ public class WAMGame implements Runnable{
         long currentTime;
         while (go){
             currentTime = System.currentTimeMillis();
-            this.wamGame.update();
+            this.wamGame.update(this.wamPlayers);
             if (this.time == currentTime){
                 go = false;
             }

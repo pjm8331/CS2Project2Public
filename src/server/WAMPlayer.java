@@ -24,6 +24,7 @@ public class WAMPlayer implements WAMProtocol, Closeable {
     public WAMPlayer(Socket socket, WAM wamGame) throws WAMException{
         this.socket = socket;
         this.score = 0;
+        this.wamGame = wamGame;
         try {
             this.scanner = new Scanner(socket.getInputStream());
             this.printStream = new PrintStream(socket.getOutputStream());
@@ -37,12 +38,12 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         printStream.println(WELCOME);
     }
 
-    public void moleUp(){
-        printStream.println(MOLE_UP);
+    public void moleUp(int spot){
+        printStream.println(MOLE_UP + spot);
     }
 
-    public void moleDown(){
-        printStream.println(MOLE_DOWN);
+    public void moleDown(int spot){
+        printStream.println(MOLE_DOWN + spot);
     }
 
     public void whack(){

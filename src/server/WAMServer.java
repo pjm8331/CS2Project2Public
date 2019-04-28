@@ -69,14 +69,14 @@ public class WAMServer implements WAMProtocol, Runnable {
     public void run(){
         try{
             ArrayList<WAMPlayer> Player = new ArrayList<>();
+            WAM wam = new WAM(this.rows, this.cols);
+            WAMGame game = new WAMGame(this.rows, this.cols, Player, this.time, wam);
            for(int i = 0; i<this.players; i++){
                System.out.print("Waiting for player " + (i+1) + "...");
                Socket playerSocket = server.accept();
            System.out.println("Player " + (i+1) +" connected!");
-               Player.add(new WAMPlayer(playerSocket));
+               Player.add(new WAMPlayer(playerSocket, wam));
            }
-           WAM wam = new WAM(this.rows, this.cols);
-           WAMGame game = new WAMGame(this.rows, this.cols, Player, this.time, wam);
            new Thread(game).run();
         }
         catch(IOException e){
