@@ -1,5 +1,7 @@
 package server;
 
+import client.gui.WAMException;
+
 /**
  * Handles the game logic
  *@author John Baxley(jmb3471)
@@ -28,23 +30,27 @@ public class WAM {
 
     /**
      * Gets the board
-     *
      * @return the board
      */
     public Mole[][] getBoard() {
         return this.board;
     }
 
-    public void update() {
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                double rand = Math.random();
-                if (rand % 2 == 0) {
-                    board[col][row] = Mole.UP;
-                } else {
-                    board[col][row] = Mole.DOWN;
-                }
-            }
-        }
+    /**
+     * Sets a spot on the 2d array to Mole enum down
+     * @param row of the spot
+     * @param col of the spot
+     */
+    public void setDown(int row, int col){
+        this.board[row][col] = Mole.DOWN;
+    }
+
+    /**
+     * Sets a spot on the 2d array to Mole enum up
+     * @param row of the spot
+     * @param col of the spot
+     */
+    public void setUp(int row, int col){
+        this.board[row][col] = Mole.UP;
     }
 }
