@@ -1,8 +1,10 @@
 package server;
 
 import client.gui.WAMException;
+import com.sun.webkit.ThemeClient;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class WAMGame implements Runnable{
     private ArrayList<WAMPlayer> wamPlayers;
@@ -40,19 +42,28 @@ public class WAMGame implements Runnable{
     public void run(){
         boolean go = true;
         long currentTime;
+        Random random = new Random();
         while (go){
             currentTime = System.currentTimeMillis();
 
-            System.out.println(currentTime);
-            System.out.println(this.time);
-            this.wamGame.update(this.wamPlayers);
-            if (this.time == currentTime){
+            Mole mole = new Mole(this.row, this.col, this.wamGame, this.wamPlayers);
+
+            mole.run();
+            try{
+                for (WAMPlayer player : this.wamPlayers){
+                    player.makeWhack();
+                }
+            }
+            catch (WAMException e){
+                e.printStackTrace();
+            }
+            if (this.time <= currentTime){
                 go = false;
             }
         }
 
         WAMPlayer winner = this.wamPlayers.get(0);
-        int index = 0;
+        int index = -1;
 
         for (WAMPlayer player : this.wamPlayers){
             if (winner.getScore() < player.getScore()){

@@ -74,7 +74,7 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
             this.buttons = new Button[row][col];
 
-            this.label = new Label(this.whackBoard.getGameTime() + " seconds passed");
+            this.label = new Label("SCORE: 0" );
 
         }
         catch (WAMException | ArrayIndexOutOfBoundsException | NumberFormatException e){

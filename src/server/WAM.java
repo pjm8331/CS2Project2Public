@@ -69,6 +69,7 @@ public class WAM {
      * @param col of the spot
      */
     public void setDown(int row, int col){
+
         this.board[row][col] = Mole.DOWN;
     }
 
@@ -78,53 +79,36 @@ public class WAM {
      * @param col of the spot
      */
     public void setUp(int row, int col) {
+
         this.board[row][col] = Mole.UP;
     }
-    public void update(ArrayList<WAMPlayer> players){
+
+    public int update(ArrayList<WAMPlayer> players) {
+
+        Random random = new Random();
+        int rand = random.nextInt(rows * cols);
+
+        int[] spot = getSpotNum(rand);
+
+        this.board[spot[0]][spot[1]] = Mole.UP;
+
+        for (WAMPlayer player : players) {
+            player.moleUp(rand);
+        }
+
+        int rand2 = random.nextInt(1000);
+
         try {
-            Random random = new Random();
-            int rand = random.nextInt(rows * cols);
-
-            int[] spot = getSpotNum(rand);
-
-            this.board[spot[0]][spot[1]] = Mole.UP;
-
-            for (WAMPlayer player : players) {
-                player.moleUp(rand);
-            }
-
-            int rand2 = random.nextInt(2000) + 1000;
-
-            try{
-                for (WAMPlayer player : players){
-                    player.makeWhack();
-                }
-            }
-            catch (WAMException e){
-                e.printStackTrace();
-            }
-
-            TimeUnit.MILLISECONDS.sleep(rand2);
-            try{
-                for (WAMPlayer player : players){
-                    player.makeWhack();
-                }
-            }
-            catch (WAMException e){
-                e.printStackTrace();
-            }
-
-            this.board[spot[0]][spot[1]] = Mole.DOWN;
-
-            for (WAMPlayer player : players){
-                player.moleDown(rand);
-            }
+            Thread.sleep(1000);
         }
-        catch (InterruptedException e){
-            for (WAMPlayer player : players){
-                player.error("Interrupted");
-            }
+        catch (InterruptedException e){e.printStackTrace();}
+        this.board[spot[0]][spot[1]] = Mole.DOWN;
+
+        for (WAMPlayer player : players) {
+            player.moleDown(rand);
         }
+
+        return rand;
 
 
     }
