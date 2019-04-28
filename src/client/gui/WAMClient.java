@@ -46,6 +46,7 @@ public class WAMClient {
             this.out = new PrintStream(clientSocket.getOutputStream());
             this.go = true;
 
+
             String request = this.in.next();
             String args = this.in.nextLine();
 
@@ -77,7 +78,7 @@ public class WAMClient {
     }
 
     public void sendWhack(int row, int col){
-        this.out.println(WHACK + row + " " + col);
+        this.out.println(WHACK + " " + row + " " + col);
     }
 
     /**
@@ -160,7 +161,7 @@ public class WAMClient {
                         this.stop();
                         break;
                     case SCORE:
-                        this.wamBoard.changeScore(Integer.parseInt(fields[1]));
+                        this.wamBoard.changeScore(Integer.parseInt(fields[0]));
                     case ERROR:
                         System.out.print("Error!");
                         this.wamBoard.error();
