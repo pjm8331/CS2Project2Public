@@ -173,7 +173,7 @@ public class WAMBoard {
     }
 
     public void changeScore(int num){
-        this.score += num;
+        this.score = num;
     }
 
     public int getScore(){

@@ -1,5 +1,7 @@
 package server;
 
+import client.gui.WAMException;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -74,9 +76,26 @@ public class WAM {
                 player.moleUp(rand);
             }
 
-            int rand2 = random.nextInt(3000) + 1000;
+            int rand2 = random.nextInt(2000) + 1000;
+
+            try{
+                for (WAMPlayer player : players){
+                    player.makeWhack();
+                }
+            }
+            catch (WAMException e){
+                e.printStackTrace();
+            }
 
             TimeUnit.MILLISECONDS.sleep(rand2);
+            try{
+                for (WAMPlayer player : players){
+                    player.makeWhack();
+                }
+            }
+            catch (WAMException e){
+                e.printStackTrace();
+            }
 
             this.board[spot[0]][spot[1]] = Mole.DOWN;
 

@@ -148,7 +148,6 @@ public class WAMClient {
                         break;
                     case WHACK:
                     case GAME_LOST:
-
                         this.wamBoard.gameLost();
                         this.stop();
                         break;
@@ -162,6 +161,7 @@ public class WAMClient {
                         break;
                     case SCORE:
                         this.wamBoard.changeScore(Integer.parseInt(fields[0]));
+                        break;
                     case ERROR:
                         System.out.print("Error!");
                         this.wamBoard.error();
