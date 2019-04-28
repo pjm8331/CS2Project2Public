@@ -63,6 +63,23 @@ public class WAM {
         return this.board;
     }
 
+    /**
+     * Sets a spot on the 2d array to Mole enum down
+     * @param row of the spot
+     * @param col of the spot
+     */
+    public void setDown(int row, int col){
+        this.board[row][col] = Mole.DOWN;
+    }
+
+    /**
+     * Sets a spot on the 2d array to Mole enum up
+     * @param row of the spot
+     * @param col of the spot
+     */
+    public void setUp(int row, int col) {
+        this.board[row][col] = Mole.UP;
+    }
     public void update(ArrayList<WAMPlayer> players){
         try {
             Random random = new Random();
