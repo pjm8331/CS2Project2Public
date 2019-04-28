@@ -87,11 +87,6 @@ public class WAM {
         server.Mole mole1 = new server.Mole(this.getRows(), this.getCols(), this, players );
         mole.run();
         mole1.run();
-        for (WAMPlayer player : players){
-            try {
-                player.makeWhack();
-            }
-            catch (WAMException e){e.printStackTrace();}
-        }
+
     }
 }

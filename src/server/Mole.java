@@ -1,5 +1,7 @@
 package server;
 
+import client.gui.WAMException;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -36,10 +38,17 @@ public class Mole extends Thread {
             player.moleUp(rand);
         }
 
-        int rand2 = random.nextInt(1000) + 2000;
+        for (WAMPlayer player : this.wamplayers){
+            try {
+                player.makeWhack();
+            }
+            catch (WAMException e){e.printStackTrace();}
+        }
+
+        int rand2 = random.nextInt(1000) + 1000;
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(rand2);
         }
         catch (InterruptedException e){e.printStackTrace();}
 
