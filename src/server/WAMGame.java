@@ -4,7 +4,9 @@ import client.gui.WAMException;
 import com.sun.webkit.ThemeClient;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class WAMGame implements Runnable{
     private ArrayList<WAMPlayer> wamPlayers;
@@ -45,7 +47,6 @@ public class WAMGame implements Runnable{
         while (go){
             currentTime = System.currentTimeMillis();
 
-            this.wamGame.update(wamPlayers);
             this.wamGame.update(wamPlayers);
 
             if (this.time <= currentTime){

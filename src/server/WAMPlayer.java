@@ -74,37 +74,11 @@ public class WAMPlayer implements WAMProtocol, Closeable{
         printStream.println(ERROR + " " + message);
     }
 
-    public synchronized void makeWhack() throws WAMException{
-       if (scanner.hasNextLine()) {
-           String response = scanner.nextLine();
-
-
-        if (response.startsWith(WHACK)){
-            String[] tokens = response.split(" ");
-            if(tokens.length == 3) {
-                if (Integer.parseInt(tokens[2]) == this.playerNum) {
-
-                    int[] spot = this.wamGame.getSpotNum(Integer.parseInt(tokens[1]));
-                    if (this.wamGame.getSpot((spot[0]), (spot[1])) == WAM.Mole.UP) {
-                        this.score += 1;
-                        printStream.println(MOLE_DOWN + " " + Integer.parseInt(tokens[1]) * Integer.parseInt(tokens[2]));
-                        printStream.println(SCORE + " " + score);
-                    } else {
-                        this.score -= 1;
-                        printStream.println(SCORE + " " + score);
-                    }
-                }
-            }
-            else {
-                throw new WAMException("Invalid response");
-            }
-
-        }
-        else {
-            throw new WAMException("Invalid response");
-        }
-       }
+    public Scanner getScanner(){
+        return this.scanner;
     }
+
+    public synchronized void makeWhack()throws WAMException{}
 
     public int getScore(){
         return this.score;
