@@ -60,7 +60,7 @@ public class Mole extends Thread {
             catch (WAMException e){e.printStackTrace();}
         }
 
-        int rand2 = random.nextInt(1000) + 1000;
+        int rand2 = random.nextInt(2000) + 1500  ;
 
         try {
             Thread.sleep(rand2);

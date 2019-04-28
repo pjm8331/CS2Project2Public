@@ -4,7 +4,6 @@ import client.gui.WAMException;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -136,8 +135,6 @@ public class WAM {
     public void update(ArrayList<WAMPlayer> players) {
         Random random = new Random();
         int rand = random.nextInt(rows * cols);
-
-        int[] spot = this.getSpotNum(rand);
 
         server.Mole mole = new server.Mole(this.getRows(), this.getCols(), this, players );
         server.Mole mole1 = new server.Mole(this.getRows(), this.getCols(), this, players );

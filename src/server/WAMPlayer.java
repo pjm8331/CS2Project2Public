@@ -81,13 +81,6 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
     }
 
     /**
-     * Sends a SCORE message
-     */
-    public void score(){
-        printStream.println(SCORE + " " +  this.score);
-    }
-
-    /**
      * Sends a GAME_LOST message
      */
     public void gameLost(){
@@ -174,5 +167,22 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
             socket.close();
         }
         catch (IOException e){}
+    }
+
+    /**
+     * Checks if two players are equal
+     * @param other
+     * @return true if other is a player and has the same player number as this. False otherwise
+     */
+    @Override
+    public boolean equals(Object other){
+        if (other instanceof WAMPlayer) {
+            WAMPlayer player = (WAMPlayer) other;
+            if (player.playerNum == ((WAMPlayer) other).playerNum){
+                return true;
+            }
+        }
+
+       return false;
     }
 }
