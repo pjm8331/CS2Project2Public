@@ -8,19 +8,32 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * Handles the game logic
+ * @author John Baxley(jmb3471)
+ * @author Peter Mastropaolo(pjm8331)
+ */
 public class WAMGame implements Runnable{
     private ArrayList<WAMPlayer> wamPlayers;
 
-    private WAM wamGame;
+    private WAM wamGame; //The array the game will run on
 
-    private long time;
+    private long time; //How long the game will run
 
-    private int col;
+    private int col; //The number of columns
 
-    private int row;
+    private int row; //The number of rows
 
-    private long startTime;
+    private long startTime; //The start time variable used to calculate when the game ends
 
+    /**
+     * Constructor for the game
+     * @param row The rows in the game
+     * @param col The columns in the game
+     * @param players The players in the game
+     * @param time How long the game will run
+     * @param wamGame The array the game will run on
+     */
     public WAMGame(int row, int col, ArrayList<WAMPlayer> players, int time, WAM wamGame){
 
         this.row = row;
@@ -39,6 +52,10 @@ public class WAMGame implements Runnable{
     }
 
     //go will correspond to time
+
+    /**
+     * runs the game
+     */
     @Override
     public void run(){
         boolean go = true;
