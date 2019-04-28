@@ -34,6 +34,8 @@ public class WAMClient {
 
     private int playerNum;
 
+    private int cols;
+
     /**
      * Constructor for WAMClient
      * @param host the host server to connect to
@@ -47,7 +49,6 @@ public class WAMClient {
             this.out = new PrintStream(clientSocket.getOutputStream());
             this.go = true;
 
-
             String request = this.in.next();
             String args = this.in.nextLine();
 
@@ -59,6 +60,7 @@ public class WAMClient {
             int playerNum = Integer.parseInt(fields[3]);
 
             this.playerNum = playerNum;
+            this.cols = cols;
 
             this.wamBoard = new WAMBoard(rows, cols, playerNum);
 
@@ -81,7 +83,8 @@ public class WAMClient {
     }
 
     public void sendWhack(int row, int col){
-        this.out.println(WHACK + " " + row + " " + col + " " + this.playerNum);
+        int spot = row * this.cols + col;
+        this.out.println(WHACK + " " + spot + " " + this.playerNum);
     }
 
     /**

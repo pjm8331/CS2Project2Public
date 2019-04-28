@@ -74,15 +74,18 @@ public class WAMPlayer implements WAMProtocol, Closeable{
         printStream.println(ERROR + " " + message);
     }
 
-    public void makeWhack() throws WAMException{
-        String response = scanner.nextLine();
+    public synchronized void makeWhack() throws WAMException{
+       if (scanner.hasNextLine()) {
+           String response = scanner.nextLine();
+
 
         if (response.startsWith(WHACK)){
             String[] tokens = response.split(" ");
-            if(tokens.length == 4) {
-                if (Integer.parseInt(tokens[3]) == this.playerNum) {
+            if(tokens.length == 3) {
+                if (Integer.parseInt(tokens[2]) == this.playerNum) {
 
-                    if (this.wamGame.getSpot(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2])) == WAM.Mole.UP) {
+                    int[] spot = this.wamGame.getSpotNum(Integer.parseInt(tokens[1]));
+                    if (this.wamGame.getSpot((spot[0]), (spot[1])) == WAM.Mole.UP) {
                         this.score += 1;
                         printStream.println(MOLE_DOWN + " " + Integer.parseInt(tokens[1]) * Integer.parseInt(tokens[2]));
                         printStream.println(SCORE + " " + score);
@@ -100,6 +103,7 @@ public class WAMPlayer implements WAMProtocol, Closeable{
         else {
             throw new WAMException("Invalid response");
         }
+       }
     }
 
     public int getScore(){
