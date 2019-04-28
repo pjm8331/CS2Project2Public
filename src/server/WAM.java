@@ -79,37 +79,19 @@ public class WAM {
      * @param col of the spot
      */
     public void setUp(int row, int col) {
-
         this.board[row][col] = Mole.UP;
     }
 
-    public int update(ArrayList<WAMPlayer> players) {
-
-        Random random = new Random();
-        int rand = random.nextInt(rows * cols);
-
-        int[] spot = getSpotNum(rand);
-
-        this.board[spot[0]][spot[1]] = Mole.UP;
-
-        for (WAMPlayer player : players) {
-            player.moleUp(rand);
+    public void update(ArrayList<WAMPlayer> players) {
+        server.Mole mole = new server.Mole(this.getRows(), this.getCols(), this, players );
+        server.Mole mole1 = new server.Mole(this.getRows(), this.getCols(), this, players );
+        mole.run();
+        mole1.run();
+        for (WAMPlayer player : players){
+            try {
+                player.makeWhack();
+            }
+            catch (WAMException e){e.printStackTrace();}
         }
-
-        int rand2 = random.nextInt(1000);
-
-        try {
-            Thread.sleep(1000);
-        }
-        catch (InterruptedException e){e.printStackTrace();}
-        this.board[spot[0]][spot[1]] = Mole.DOWN;
-
-        for (WAMPlayer player : players) {
-            player.moleDown(rand);
-        }
-
-        return rand;
-
-
     }
 }

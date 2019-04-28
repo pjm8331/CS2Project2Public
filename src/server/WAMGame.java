@@ -46,9 +46,8 @@ public class WAMGame implements Runnable{
         while (go){
             currentTime = System.currentTimeMillis();
 
-            Mole mole = new Mole(this.row, this.col, this.wamGame, this.wamPlayers);
+            this.wamGame.update(wamPlayers);
 
-            mole.run();
             try{
                 for (WAMPlayer player : this.wamPlayers){
                     player.makeWhack();

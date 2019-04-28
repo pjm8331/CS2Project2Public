@@ -36,7 +36,7 @@ public class Mole extends Thread {
             player.moleUp(rand);
         }
 
-        int rand2 = random.nextInt(1000);
+        int rand2 = random.nextInt(1000) + 2000;
 
         try {
             Thread.sleep(1000);
@@ -44,6 +44,7 @@ public class Mole extends Thread {
         catch (InterruptedException e){e.printStackTrace();}
 
         this.wam.setDown(spot[0], spot[1]);
+        this.state = WAM.Mole.DOWN;
         for (WAMPlayer player : this.wamplayers) {
             player.moleDown(rand);
         }

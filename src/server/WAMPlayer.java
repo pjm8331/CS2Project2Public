@@ -9,7 +9,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class WAMPlayer implements WAMProtocol, Closeable {
+public class WAMPlayer implements WAMProtocol, Closeable{
 
     private Socket socket;
 
