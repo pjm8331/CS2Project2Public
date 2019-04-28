@@ -75,8 +75,9 @@ public class WAM {
      * @param row of the spot
      * @param col of the spot
      */
-    public void setUp(int row, int col){
+    public void setUp(int row, int col) {
         this.board[row][col] = Mole.UP;
+    }
     public void update(ArrayList<WAMPlayer> players){
         try {
             Random random = new Random();
