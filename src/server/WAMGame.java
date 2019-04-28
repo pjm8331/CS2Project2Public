@@ -36,7 +36,6 @@ public class WAMGame implements Runnable{
         this.time = this.startTime + this.time;
 
         this.wamGame = wamGame;
-
     }
 
     //go will correspond to time
@@ -46,14 +45,13 @@ public class WAMGame implements Runnable{
         long currentTime;
         while (go){
             currentTime = System.currentTimeMillis();
-
             this.wamGame.update(wamPlayers);
 
             if (this.time <= currentTime){
                 go = false;
             }
         }
-
+        this.wamGame.changeStatus(WAM.Status.NOT);
         int score = 0;
         int index = -1;
 

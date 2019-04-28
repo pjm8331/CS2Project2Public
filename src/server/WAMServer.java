@@ -11,8 +11,9 @@ import java.util.ArrayList;
 
 /**
  * Handles the creation of the players, the game, and all sockets for communication
- *@author John Baxley(jmb3471)
- *@author Peter Mastropaolo(pjm8331)
+ *
+ * @author John Baxley(jmb3471)
+ * @author Peter Mastropaolo(pjm8331)
  */
 public class WAMServer implements WAMProtocol, Runnable {
 
@@ -24,18 +25,18 @@ public class WAMServer implements WAMProtocol, Runnable {
 
     /**
      * Constructor for the server
-     * @param port what port to create the server at
-     * @param rows how many rows the game will have
-     * @param cols how many columns the game will have
+     *
+     * @param port    what port to create the server at
+     * @param rows    how many rows the game will have
+     * @param cols    how many columns the game will have
      * @param players how many players the game will have
-     * @param time how long the game will run
+     * @param time    how long the game will run
      * @throws WAMException custom exception for the game
      */
-    public WAMServer(int port, int rows, int cols, int players, int time) throws WAMException{
-        try{
+    public WAMServer(int port, int rows, int cols, int players, int time) throws WAMException {
+        try {
             server = new ServerSocket(port);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
             throw new WAMException(e);
         }
         this.rows = rows;
@@ -46,11 +47,12 @@ public class WAMServer implements WAMProtocol, Runnable {
 
     /**
      * main function for the creation of the game
+     *
      * @param args takes in the args when creating the game
      * @throws WAMException
      */
-    public static void main(String[] args) throws WAMException{
-        if(args.length != 5){
+    public static void main(String[] args) throws WAMException {
+        if (args.length != 5) {
             System.out.println("Usage: java WAMServer <port> <rows> <columns> <player #> <duration>");
         }
 
@@ -67,27 +69,29 @@ public class WAMServer implements WAMProtocol, Runnable {
      * Runs the server and creates players, the game, and the sockets for the players
      */
     @Override
-    public void run(){
-        try{
+    public void run() {
+        try {
             ArrayList<WAMPlayer> Player = new ArrayList<>();
             WAM wam = new WAM(this.rows, this.cols);
             WAMGame game = new WAMGame(this.rows, this.cols, Player, this.time, wam);
-           for(int i = 0; i<this.players; i++){
-               System.out.print("Waiting for player " + (i+1) + "...");
-               Socket playerSocket = server.accept();
+            for (int i = 0; i < this.players; i++) {
+                System.out.print("Waiting for player " + (i + 1) + "...");
+                Socket playerSocket = server.accept();
 
-               System.out.println("Player " + (i+1) +" connected!");
-               WAMPlayer player = new WAMPlayer(playerSocket, wam, i + 1);
-               player.connect();
-               Player.add(player);
-           }
-           new Thread(game).run();
-        }
-        catch(IOException e){
+                System.out.println("Player " + (i + 1) + " connected!");
+                WAMPlayer player = new WAMPlayer(playerSocket, wam, i + 1);
+                player.connect();
+                Player.add(player);
+            }
+            for (WAMPlayer player : Player) {
+                new Thread(player).start();
+            }
+            new Thread(game).run();
+
+        } catch (IOException e) {
             System.err.println("IOException!");
             e.printStackTrace();
-        }
-        catch(WAMException e){
+        } catch (WAMException e) {
             System.err.println("Failed player creation!");
             e.printStackTrace();
         }

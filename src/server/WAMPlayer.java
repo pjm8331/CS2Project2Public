@@ -9,7 +9,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class WAMPlayer implements WAMProtocol, Closeable{
+public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
 
     private Socket socket;
 
@@ -78,7 +78,39 @@ public class WAMPlayer implements WAMProtocol, Closeable{
         return this.scanner;
     }
 
-    public synchronized void makeWhack()throws WAMException{}
+    public synchronized void makeWhack()throws WAMException{
+
+    }
+
+
+
+    @Override
+    public void run() {
+        boolean go = true;
+        while (go){
+            if (this.wamGame.getStatus() == WAM.Status.NOT){
+                break;
+            }
+            String response = scanner.nextLine();
+            if (response.startsWith(WHACK)){
+                String args = scanner.nextLine().trim();
+                String[] fields = args.trim().split( " " );
+                int[] rowcol = this.wamGame.getSpotNum(Integer.parseInt(fields[1]));
+                if (this.wamGame.getSpot(rowcol[0], rowcol[1]) == WAM.Mole.UP){
+                    this.score += 1;
+                    this.printStream.println(SCORE + " " + this.score);
+
+                }
+                else {
+                    this.score -= 1;
+                    this.printStream.println(SCORE + " " + this.score);
+                }
+            }
+        }
+
+        //wait for whack messge
+        //call some whack method on the game or all moles
+    }
 
     public int getScore(){
         return this.score;

@@ -16,6 +16,13 @@ public class WAM {
     private static int rows;
     private static int cols;
 
+
+    public enum Status {
+        RUNNING, NOT
+    }
+
+    private Status status;
+
     public enum Mole {
         UP, DOWN
     }
@@ -25,12 +32,21 @@ public class WAM {
     public WAM(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
+        this.status = Status.RUNNING;
         this.board = new Mole[cols][rows];
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
                 board[col][row] = Mole.DOWN;
             }
         }
+    }
+
+    public void changeStatus(Status status){
+        this.status = status;
+    }
+
+    public Status getStatus(){
+        return this.status;
     }
 
     public Mole getSpot(int row, int col){
