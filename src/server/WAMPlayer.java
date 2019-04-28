@@ -127,29 +127,36 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
     @Override
     public void run() {
         boolean go = true;
-        while (go){
+        while (go && scanner.hasNextLine()){
             if (this.wamGame.getStatus() == WAM.Status.NOT){
                 break;
             }
-            String response = scanner.nextLine();
-            if (response.startsWith(WHACK)){
-                String args = scanner.nextLine().trim();
-                String[] fields = args.trim().split( " " );
-                int[] rowcol = this.wamGame.getSpotNum(Integer.parseInt(fields[1]));
-                if (this.wamGame.getSpot(rowcol[0], rowcol[1]) == WAM.Mole.UP){
-                    this.score += 1;
-                    this.printStream.println(SCORE + " " + this.score);
-
+            if (scanner.hasNextLine()) {
+                String response = scanner.nextLine();
+                if (response == " " || response == ""){
+                    break;
                 }
-                else {
-                    this.score -= 1;
-                    this.printStream.println(SCORE + " " + this.score);
+                if (response.startsWith(WHACK)) {
+                    String args = scanner.nextLine().trim();
+                    if (args == " " || args == ""){
+                        break;
+                    }
+                    String[] fields = args.trim().split(" ");
+                    int[] rowcol = this.wamGame.getSpotNum(Integer.parseInt(fields[1]));
+                    if (this.wamGame.getSpot(rowcol[0], rowcol[1]) == WAM.Mole.UP) {
+                        this.score += 1;
+                        this.printStream.println(SCORE + " " + this.score);
+
+                    } else {
+                        this.score -= 1;
+                        this.printStream.println(SCORE + " " + this.score);
+                    }
                 }
             }
+            else{
+                go = false;
+            }
         }
-
-        //wait for whack messge
-        //call some whack method on the game or all moles
     }
 
     /**

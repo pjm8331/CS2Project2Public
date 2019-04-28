@@ -71,6 +71,7 @@ public class WAMGame implements Runnable{
         ArrayList<WAMPlayer> tied = new ArrayList<WAMPlayer>();
         ArrayList<Integer> tiedNum = new ArrayList<Integer>();
 
+        //Checks for clear winner
         for (int i = 0; i < this.wamPlayers.size(); i++){
             if (score < this.wamPlayers.get(i).getScore()){
                 score = this.wamPlayers.get(i).getScore();
@@ -80,15 +81,22 @@ public class WAMGame implements Runnable{
                     tiedNum.remove(j);
                 }
             }
+            //Checks for ties
             else if (score == this.wamPlayers.get(i).getScore() && (this.wamPlayers.get(i).getScore() != 0 )){
-                tied.add(this.wamPlayers.get(index));
-                tied.add(this.wamPlayers.get(i));
-                tiedNum.add(index);
-                tiedNum.add(i);
+                if (score != 0) {
+                    tied.add(this.wamPlayers.get(index));
+                    tied.add(this.wamPlayers.get(i));
+                    tiedNum.add(index);
+                    tiedNum.add(i);
+                }
+                else {
+                    index = i;
+                }
             }
 
         }
 
+        //Sends messages for tied
         if (tied.size() != 0){
             for (WAMPlayer wamPlayer : this.wamPlayers) {
                 for (WAMPlayer wamPlayer1 : tied) {
@@ -101,6 +109,7 @@ public class WAMGame implements Runnable{
             }
 
         }
+        //Sends messages for winners and losers
         for (int i = 0; i < this.wamPlayers.size(); i++){
             if (i == index){
                 this.wamPlayers.get(i).gameWon();

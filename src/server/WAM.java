@@ -133,19 +133,23 @@ public class WAM {
      * @param players list of players in the game
      */
     public void update(ArrayList<WAMPlayer> players) {
-        Random random = new Random();
-        int rand = random.nextInt(rows * cols);
-
+        //Creates threads of the moles
         server.Mole mole = new server.Mole(this.getRows(), this.getCols(), this, players );
         server.Mole mole1 = new server.Mole(this.getRows(), this.getCols(), this, players );
+        server.Mole mole2 = new server.Mole(this.getRows(), this.getCols(), this, players );
+        server.Mole mole3 = new server.Mole(this.getRows(), this.getCols(), this, players );
+
 
         mole.start();
         mole1.start();
+        mole2.start();
+        mole3.start();
+
 
         mole.run();
         mole1.run();
-
-
+        mole2.run();
+        mole3.run();
 
     }
 }
