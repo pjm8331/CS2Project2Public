@@ -5,17 +5,29 @@ import client.gui.WAMException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Mole threads for controlling Mole.UP and Mole.DOWN
+ * @author John Baxley(jmb3471)
+ * @author Peter Mastropaolo(pjm8331)
+ */
 public class Mole extends Thread {
-    int row;
+    int row; //Number of rows in the game
 
-    int col;
+    int col; //Number of columns in the gmae
 
-    WAM.Mole state;
+    WAM.Mole state; //State of the mole
 
-    WAM wam;
+    WAM wam; //The game array
 
-    ArrayList<WAMPlayer> wamplayers;
+    ArrayList<WAMPlayer> wamplayers; //List of the players in the game
 
+    /**
+     * Constructor for the thread
+     * @param row the rows
+     * @param col the columns
+     * @param wam the array
+     * @param wamplayers the players
+     */
     public Mole(int row, int col, WAM wam, ArrayList<WAMPlayer> wamplayers){
         this.col = col;
         this.row = row;
@@ -25,6 +37,9 @@ public class Mole extends Thread {
 
     }
 
+    /**
+     * Runs the thread for controlling up and down
+     */
     public void run(){
         Random random = new Random();
         int rand = random.nextInt(this.wam.getRows() * this.wam.getCols());
