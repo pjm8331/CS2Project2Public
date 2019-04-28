@@ -21,10 +21,13 @@ public class WAMPlayer implements WAMProtocol, Closeable{
 
     private WAM wamGame;
 
-    public WAMPlayer(Socket socket, WAM wamGame) throws WAMException{
+    private int playerNum;
+
+    public WAMPlayer(Socket socket, WAM wamGame, int playerNum) throws WAMException{
         this.socket = socket;
         this.score = 0;
         this.wamGame = wamGame;
+        this.playerNum = playerNum;
         try {
             this.scanner = new Scanner(socket.getInputStream());
             this.printStream = new PrintStream(socket.getOutputStream());
@@ -34,9 +37,9 @@ public class WAMPlayer implements WAMProtocol, Closeable{
         }
     }
 
-    public void connect(){
+    public void connect(int playernum){
         printStream.println(WELCOME + " " + this.wamGame.getRows() + " " +
-                this.wamGame.getCols() + " " + 1 + " " + 100);
+                this.wamGame.getCols() + " " + 1 + " " + playernum);
 
 
     }
@@ -56,6 +59,7 @@ public class WAMPlayer implements WAMProtocol, Closeable{
     public void score(){
         printStream.println(SCORE + " " +  this.score);
     }
+
     public void gameLost(){
         printStream.println(GAME_LOST);
     }

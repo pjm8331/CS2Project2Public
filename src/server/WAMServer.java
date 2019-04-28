@@ -77,8 +77,8 @@ public class WAMServer implements WAMProtocol, Runnable {
                Socket playerSocket = server.accept();
 
                System.out.println("Player " + (i+1) +" connected!");
-               WAMPlayer player = new WAMPlayer(playerSocket, wam);
-               player.connect();
+               WAMPlayer player = new WAMPlayer(playerSocket, wam, i + 1);
+               player.connect(i+1);
                Player.add(player);
            }
            new Thread(game).run();

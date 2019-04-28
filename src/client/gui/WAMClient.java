@@ -32,6 +32,7 @@ public class WAMClient {
     //Whether or not the game is running
     private boolean go;
 
+    private int playerNum;
 
     /**
      * Constructor for WAMClient
@@ -55,9 +56,9 @@ public class WAMClient {
             int rows = Integer.parseInt(fields[0]);
             int cols = Integer.parseInt(fields[1]);
             int players = Integer.parseInt(fields[2]);
-            int time = Integer.parseInt(fields[3]);
+            int playerNum = Integer.parseInt(fields[3]);
 
-            this.wamBoard = new WAMBoard(rows, cols, players, time);
+            this.wamBoard = new WAMBoard(rows, cols, playerNum);
 
             if (!request.equals(WELCOME)){
                 throw new WAMException("No welcome message");
@@ -78,7 +79,7 @@ public class WAMClient {
     }
 
     public void sendWhack(int row, int col){
-        this.out.println(WHACK + " " + row + " " + col);
+        this.out.println(WHACK + " " + row + " " + col + " " + playerNum);
     }
 
     /**

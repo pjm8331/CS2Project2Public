@@ -42,10 +42,10 @@ public class WAMGame implements Runnable{
     public void run(){
         boolean go = true;
         long currentTime;
-        Random random = new Random();
         while (go){
             currentTime = System.currentTimeMillis();
 
+            this.wamGame.update(wamPlayers);
             this.wamGame.update(wamPlayers);
 
             if (this.time <= currentTime){
@@ -53,14 +53,15 @@ public class WAMGame implements Runnable{
             }
         }
 
-        WAMPlayer winner = this.wamPlayers.get(0);
+        int score = 0;
         int index = -1;
 
-        for (WAMPlayer player : this.wamPlayers){
-            if (winner.getScore() < player.getScore()){
-                winner = player;
+        for (int i = 0; i < this.wamPlayers.size(); i++){
+            if (score < this.wamPlayers.get(i).getScore()){
+                score = this.wamPlayers.get(i).getScore();
+                index = i;
             }
-            index++;
+
         }
 
         for (int i = 0; i < this.wamPlayers.size(); i++){

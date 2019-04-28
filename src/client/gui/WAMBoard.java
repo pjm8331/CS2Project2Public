@@ -13,13 +13,7 @@ public class WAMBoard {
     private int rows;
     private int cols;
 
-    //Time when game started
-    private long time;
-
     private int score;
-
-    //Number of the players
-    private int players;
 
     //List of observers on this board
     private List<Observer<WAMBoard>> observerlist;
@@ -30,29 +24,22 @@ public class WAMBoard {
     //Status of the board
     private Status status;
 
-    //Duration of the game
-    private long gameTime;
 
     /**
      * Constructor for WAMBoard
      * @param rows number of rows the board has
      * @param cols number of columns the board has
      * @param players number of players the board has
-     * @param time amount of time allotted for the board to run
      */
-    public WAMBoard(int rows, int cols, int players, long time) throws WAMException{
+    public WAMBoard(int rows, int cols, int players) throws WAMException{
         if (players < 1){
             throw new WAMException("Missing players");
         }
         this.rows = rows;
         this.cols = cols;
         this.score = 0;
-        this.players = players;
         this.observerlist = new LinkedList<>();
         this.WAMboard = new Spot[rows][cols];
-        this.gameTime = time;
-
-        this.time = System.currentTimeMillis();
 
         for(int row = 0; row < rows; row++){
             for(int col = 0; col <cols; col++){
@@ -77,19 +64,7 @@ public class WAMBoard {
         WIN, LOSE, TIE, ERROR, RUNNING
     }
 
-    /**
-     * Get how much time is left in the game
-     * @return the time left in the game
-     */
-    public long getTimeLeft(){
-        long currentMs = System.currentTimeMillis() - this.time;
-        long currentTime = currentMs/1000;
-        return currentTime - this.gameTime;
-    }
 
-    public long getGameTime(){
-        return this.gameTime;
-    }
     /**
      * Check whether or not a spot is up or down
      * @param col column of spot
