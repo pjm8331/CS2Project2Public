@@ -49,6 +49,9 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         printStream.println(WHACK);
     }
 
+    public void score(){
+        printStream.println(SCORE + this.score);
+    }
     public void gameLost(){
         printStream.println(GAME_LOST);
     }
@@ -88,6 +91,10 @@ public class WAMPlayer implements WAMProtocol, Closeable {
         else {
             throw new WAMException("Invalid response");
         }
+    }
+
+    public int getScore(){
+        return this.score;
     }
 
     public void close(){

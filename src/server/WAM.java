@@ -43,6 +43,7 @@ public class WAM {
         for (int col = 0; col < cols; col++) {
             for (int row = 0; row < rows; row++) {
                 double rand = Math.random();
+
                 if (rand % 2 == 0) {
                     board[col][row] = Mole.UP;
                 } else {

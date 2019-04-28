@@ -42,9 +42,19 @@ public class WAMGame implements Runnable{
         long currentTime;
         while (go){
             currentTime = System.currentTimeMillis();
+            this.wamGame.update();
             if (this.time == currentTime){
                 go = false;
             }
+        }
+        WAMPlayer winner = this.wamPlayers.get(0);
+        int index = 0;
+
+        for (WAMPlayer player : this.wamPlayers){
+            if (winner.getScore() < player.getScore()){
+                winner = player;
+            }
+            index++;
         }
         for (WAMPlayer player : this.wamPlayers){
             player.close();
