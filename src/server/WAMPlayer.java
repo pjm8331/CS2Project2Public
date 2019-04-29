@@ -7,6 +7,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.security.spec.ECField;
 import java.util.Scanner;
 
 /**
@@ -125,21 +126,28 @@ public class WAMPlayer implements WAMProtocol, Closeable, Runnable{
                 if ((response.equals(" ")) || (response.equals("")) || (response.equals("\n"))){
                     break;
                 }
+                if (this.wamGame.getStatus() == WAM.Status.NOT){
+                    break;
+                }
                 if (response.startsWith(WHACK)) {
-                    String args = scanner.nextLine().trim();
-                    if (args == " " || args == ""){
-                        break;
-                    }
-                    String[] fields = args.trim().split(" ");
-                    int[] rowcol = this.wamGame.getSpotNum(Integer.parseInt(fields[1]));
-                    if (this.wamGame.getSpot(rowcol[0], rowcol[1]) == WAM.Mole.UP) {
-                        this.score += 1;
-                        this.printStream.println(SCORE + " " + this.score);
+                    try {
+                        String args = scanner.nextLine().trim();
+                        if (args == " " || args == "") {
+                            break;
+                        }
 
-                    } else {
-                        this.score -= 1;
-                        this.printStream.println(SCORE + " " + this.score);
+                        String[] fields = args.trim().split(" ");
+                        int[] rowcol = this.wamGame.getSpotNum(Integer.parseInt(fields[1]));
+                        if (this.wamGame.getSpot(rowcol[0], rowcol[1]) == WAM.Mole.UP) {
+                            this.score += 1;
+                            this.printStream.println(SCORE + " " + this.score);
+
+                        } else {
+                            this.score -= 1;
+                            this.printStream.println(SCORE + " " + this.score);
+                        }
                     }
+                    catch (Exception e){}
                 }
             }
             else{
