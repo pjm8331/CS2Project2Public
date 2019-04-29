@@ -32,7 +32,7 @@ public class WAMBoard {
      * @param players number of players the board has
      */
     public WAMBoard(int rows, int cols, int players) throws WAMException{
-        if (players < 1){
+        if (players < 0){
             throw new WAMException("Missing players");
         }
         this.rows = rows;

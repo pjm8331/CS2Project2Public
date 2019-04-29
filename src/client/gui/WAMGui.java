@@ -61,7 +61,6 @@ public class WAMGui extends Application implements Observer<WAMBoard> {
 
             int port = Integer.parseInt(args.get(1));
 
-
             this.whackClient = new WAMClient(host ,port);
 
             this.whackBoard = this.whackClient.getWamBoard();

@@ -51,7 +51,6 @@ public class WAMClient {
 
             String request = this.in.next();
             String args = this.in.nextLine();
-
             String[] fields = args.trim().split( " " );
 
             int rows = Integer.parseInt(fields[0]);
@@ -62,7 +61,7 @@ public class WAMClient {
             this.playerNum = playerNum;
             this.cols = cols;
 
-            this.wamBoard = new WAMBoard(rows, cols, playerNum);
+            this.wamBoard = new WAMBoard(rows, cols, players);
 
             if (!request.equals(WELCOME)){
                 throw new WAMException("No welcome message");
