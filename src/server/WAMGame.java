@@ -92,12 +92,13 @@ public class WAMGame implements Runnable{
                 if (score != 0) {
                     tied.add(this.wamPlayers.get(index));
                     tied.add(this.wamPlayers.get(i));
+
                     tiedNum.add(index);
                     tiedNum.add(i);
                 }
                 else {
                     index = i;
-                }
+            }
             }
             else {
                 loser.add(wamPlayers.get(i));
@@ -113,7 +114,7 @@ public class WAMGame implements Runnable{
             }
         }
         else {
-            for (WAMPlayer wamPlayer : loser){
+            for (WAMPlayer wamPlayer : tied){
                 wamPlayer.gameTied();
             }
             for (WAMPlayer wamPlayer : loser){
